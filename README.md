@@ -9,7 +9,7 @@ ePortfolio
 ├── assets
 │   ├── css
 │   │   └── reflection.css
-│   ├── images
+│   ├── Media
 │   │   └── Headshot.JPG
 │   └── js
 │       └── scripts.js
