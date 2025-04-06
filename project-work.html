@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Work</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reflection.css" />
+  </head>
+  <body>
+    <header>
+      <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+      <h1>School Projects</h1>
+      <nav id="nav-menu" class="hidden">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="capstone-project.html">Capstone Project</a></li>
+          <li><a href="reflection.html">Reflection</a></li>
+          <li><a href="about.html">About Me</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="school-projects">
+        <h2>Projects</h2>
+        <ul>
+          <li><a href="#capstone-project">Capstone Project</a></li>
+          <li>
+            <a href="#project-1"
+              >Post Assembly Thermal Annealing of Microelectromechanical
+              Devices</a
+            >
+          </li>
+          <!-- <li><a href="#project-2">PPG Sensor</a></li> -->
+          <!-- <li><a href="#project-3">Project 3</a></li> -->
+        </ul>
+      </section>
+      <section id="capstone-project">
+        <h3>Capstone Project</h3>
+        <p>
+          For my Capstone project, my team and I developed a bench used to test
+          industrial Hydraulic Cylinders.
+        </p>
+      </section>
+      <section id="project-1">
+        <h3>
+          Post Assembly Thermal Annealing of Microelectromechanical Devices
+        </h3>
+        <p>
+          The challenge present for this project was to design either a
+          Microelectromechanical (MEMs) device, or a process for MEMs devices.
+          My team and I responded to the challenge by designing a process for
+          the thermal annealing of MEMs devices after they have been assembled.
+          This allows for MEMs designers to create 2D designs that can then be
+          assembled into 3D structures. Then once the structures are assembled,
+          they can be hardened in place to provide extra stability and strength.
+        </p>
+        <figure>
+          <div class="image-container">
+            <img
+              src="KLayout screenshots/Full Bridge.png"
+              alt="Figure 1"
+            />
+          </div>
+          <figcaption>Figure 1: Tsang Suspension Bridge</figcaption>
+        </figure>
+        <p>
+          To achieve this, we created a bridge using 2 Tsang suspensions that
+          act as the base of the bridge and support the main platform. The main
+          platform is suspended from the Tsang suspensions using springs that
+          act in a similar manner to the springs at the base of the Tsang
+          suspensions. From there we sputtered a layer of gold on top of the
+          bridge after fabrication. This thin gold layer provides a conductive
+          path that we then ran a current through, treating the springs
+          supporting the structure as a resistor and thermal element. On the
+          microscopic scale, the gold layer heats up in seconds. This heat is
+          then transferred into the SU8 Photoresist, causing it to harden.
+        </p>
+        <figure>
+          <img
+            src="KLayout screenshots/Tsang_Suspension.png"
+            alt="Tsang Suspension"
+            class="reduced-size-1"
+          />
+          <figcaption>Figure 2: Tsang Suspension</figcaption>
+        </figure>
+        <p>
+          We were given 2 rounds of fabrication to test our design. In the first
+          round of tests, we tried to test how the thickness of the springs
+          would affect the time required to anneal the SU8 structure. But when
+          we strayed away from having a thickness to width ratio of the springs
+          of 1:3, we encountered issues with the springs either being too
+          fragile or being so stiff the structure would not assemble. The
+          thickness of the springs was the most important factor in the
+          mechanical aspect of our design, as it limited our ability to assemble
+          the structure and limited our ability to control the resistance of the
+          springs to just the length of the springs.
+        </p>
+        <p>
+          Regardless of these challenges we were successful in our attempt to
+          design a process that could be used to anneal MEMs devices after they
+          have been assembled. Our design process also allows for specific parts
+          of the structure to be hardened. By choosing where the voltage is
+          applied to the structure, we can control where the current is passed
+          through the gold layer. This allows for the selective hardening of
+          parts of the structure, which can be used to create structures that
+          require a stiff base and a flexible middle structure. Or to create an
+          entire structure that needs to be hardened.
+        </p>
+      </section>
+      <!-- <section id="project-2">
+        <h3>PPG Sensor</h3>
+        <p>
+           Add details about Project 2 here 
+        </p>
+      </section> 
+      <section id="project-3">
+        <h3>Project 3</h3>
+        <p>
+          Add details about Project 3 here
+        </p>
+      </section> -->
+    </main>
+    <footer>
+      <p>&copy; 2025 Michael Hiltz</p>
+    </footer>
+    <script src="assets/js/scripts.js"></script>
+  </body>
+</html>

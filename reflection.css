@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background: #4b9988;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+}
+
+.menu-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+nav {
+    margin-top: 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 10px 0;
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+h1 {
+    margin: 0;
+}
+
+h2 {
+    color: #35424a;
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    background: #ffffff;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background: #d85400;
+    color: #ffffff;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+#introduction, #bio {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: row-reverse; /* Reverse the order of items */
+    align-items: center; /* Align items vertically */
+    gap: 15px; /* Add spacing between the image and text */
+    padding: 15px; /* Add padding inside the container */
+    background: #ffffff; /* Optional: Add a background color */
+    border-radius: 5px; /* Optional: Add rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+
+.profile-photo {
+    flex-shrink: 0;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.image-container {
+    display: flex; /* Flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    overflow: visible; /* Ensure no content is cut off */
+    width: 100%; /* Allow container to expand */
+}
+
+.rotated-image {
+    transform: rotate(90deg); /* Rotate the image */
+    display: block; /* Prevent inline image behavior */
+    width: 30%; /* Control the image size */
+    height: auto; /* Maintain aspect ratio */
+    margin: auto; /* Center the image */
+    object-fit: contain; /* Ensure the image fits without cropping */
+}
+
+
+
+.reduced-size {
+    width: 100%; /* Image fits perfectly within the wrapper */
+    height: auto; /* Maintain aspect ratio */
+}
+
+
+.reduced-size-1 {
+    width: 50%; /* Reduced by 50% */
+}
+
+img {
+    display: block;
+    padding: 0; /* Remove padding */
+    margin: 0 auto; /* Remove margin */
+    border: none;
+}
+
+figure {
+    text-align: center;
+    margin: 0 auto; /* Remove margin */
+    padding: 0; /* Remove padding */
+    overflow: hidden;
+}
