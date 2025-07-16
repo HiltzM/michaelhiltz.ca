@@ -1,0 +1,162 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f8fafc;
+    margin: 0;
+    padding: 0;
+    color: #222831;
+}
+
+header {
+    background: linear-gradient(90deg, #4b9988 0%, #6c5b7b 100%);
+    color: #fff;
+    padding: 32px 0 24px 0;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+    position: relative;
+}
+
+.menu-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+nav {
+    margin-top: 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 10px 0;
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.hidden {
+    display: none;
+}
+
+h1, h2, h3 {
+    margin: 0 0 16px 0;
+    font-weight: 600;
+}
+
+h2 {
+    color: #4b9988;
+    border-left: 4px solid #6c5b7b;
+    padding-left: 12px;
+    margin-top: 32px;
+}
+
+main {
+    max-width: 900px;
+    margin: 32px auto;
+    padding: 0 20px;
+}
+
+section {
+    background: #fff;
+    margin-bottom: 32px;
+    padding: 28px 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.07);
+    transition: box-shadow 0.2s;
+}
+
+section:hover {
+    box-shadow: 0 4px 20px rgba(44, 62, 80, 0.13);
+}
+
+ul {
+    padding-left: 24px;
+}
+
+a {
+    color: #6c5b7b;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #4b9988;
+    text-decoration: underline;
+}
+
+footer {
+    background: #222831;
+    color: #fff;
+    text-align: center;
+    padding: 18px 0;
+    margin-top: 40px;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+    box-shadow: 0 -2px 8px rgba(44, 62, 80, 0.08);
+}
+
+/* Dropdown submenu styles */
+.has-submenu {
+    position: relative;
+}
+
+.has-submenu > a:after {
+    content: " ▼";
+    font-size: 0.7em;
+}
+
+.submenu {
+    display: none;
+    position: static;
+    left: auto;
+    top: auto;
+    background: transparent;
+    padding: 0;
+    margin: 10px 0 0 60px;
+    min-width: auto;
+    border-radius: 4px;
+    box-shadow: none;
+    z-index: auto;
+}
+
+.submenu li {
+    margin: 5px 0;
+}
+
+.submenu li a {
+    color: rgba(255, 255, 255, 0.9);
+    padding: 8px 12px;
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.submenu li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.has-submenu:hover .submenu,
+.has-submenu:focus-within .submenu {
+    display: block;
+}
+
+@media (max-width: 700px) {
+    main {
+        padding: 0 8px;
+    }
+    section {
+        padding: 16px 8px;
+    }
+    .submenu {
+        margin-left: 20px;
+    }
+}
