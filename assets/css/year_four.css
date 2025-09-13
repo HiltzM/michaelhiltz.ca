@@ -150,6 +150,30 @@ footer {
     margin: 0 auto;
 }
 
+#PPG_figure-5 img {
+    width: 80%;      /* 60% larger than the default 50% */
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+#PPG_figure-7 img {
+    width: 100%;
+    max-width: 650px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+#PPG_figure-9 img {
+    width: 90%;      /* Takes up 90% of the container width */
+    max-width: 800px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 /* Dropdown submenu styles */
 .has-submenu {
     position: relative;
