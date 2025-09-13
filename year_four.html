@@ -158,8 +158,50 @@
         </p>
         <h4>Lab 4: Comparator Design</h4>
         <p>
-          
+          The second last step in the project was to convert the conditioned analog signal into a digital switching signal.
+          This was accomplished by implementing a comparator circuit that could reliably trigger on each heartbeat.
+          The comparator was designed using an operational amplifier with positive feedback to create hysteresis,
+          which prevents false triggering due to noise in the input signal. The circuit compares the conditioned PPG signal
+          against a 2.5V reference voltage and switches between high and low output states based on two trip points.
+          The hysteresis band was carefully calculated to ensure reliable switching while avoiding false triggers from
+          the dicrotic notch that appears in PPG signals during cardiac cycles. Figure 5 shows the comparator circuit
+          schematic with component values, while Figure 6 shows the final digital output signal. The output signal will be used in the lext
+          lab to drive an led to indicate each heartbeat.
+          <figure id="PPG_figure-5">
+            <img src="/assets/images/PPG - Figure 5 - Comparator Circuit.png" alt="Comparator Circuit Diagram" />
+            <figcaption>Figure 5: Comparator Circuit Diagram</figcaption>
+          </figure>
+
+          <figure>
+            <img src="/assets/images/PPG - Figure 6 - Digital Output.png" alt="Comparator Digital Output" class="reduced-size-1" />
+            <figcaption>Figure 6: Comparator Digital Output</figcaption>
+          </figure>
         </p>
+        <h4>Lab 5: Monostable Multivibrator Circuits</h4>
+        <p>
+          The final step in the project was to create a pulse detection circuit that would flash an LED each time a heartbeat was detected.
+          This was accomplished by implementing a three-stage circuit consisting of an edge detector, a monostable multivibrator, and an LED driver.
+          The edge detection stage used a differentiator circuit with a coupling capacitor and input resistor to generate short pulses on the rising edges of the comparator output,
+          shown in Figure 8. A diode was added to isolate only the positive-going pulses, ensuring the monostable circuit would trigger only on heartbeats.
+          The monostable multivibrator was built using two bipolar transistors configured as a one-shot pulse generator, with the pulse duration determined by an RC time constant.
+          For a maximum heart rate of 180 beats per minute, the LED flash duration was designed to be approximately 200ms to provide clear visual indication.
+          Figure 7 shows the complete pulse detection circuit schematic. The final output successfully drives an LED to flash in sync with each detected heartbeat,
+          providing a simple and effective visual indicator of the PPG signal. Lastly Figure 9 shows the completed circuit built on a breadboard.
+          <figure id="PPG_figure-7">
+            <img src="/assets/images/PPG - Figure 7 - Complete Circuit Diagram.png" alt="Complete Circuit Diagram" />
+            <figcaption>Figure 7: Complete Circuit Diagram</figcaption>
+          </figure>
+
+          <figure>
+            <img src="/assets/images/PPG - Figure 8 - Differentiator Input vs Output.PNG" alt="Differentiator Input vs Output" class="reduced-size-1" />
+            <figcaption>Figure 8: Edge Detector Input vs Output</figcaption>
+          </figure>
+          <figure id="PPG_figure-9">
+            <img src="/assets/images/PPG - Figure 9 - Breadboard Circuit.PNG" alt="Breadboard Circuit" class="reduced-size-1" />
+            <figcaption>Figure 9: Breadboard Circuit</figcaption>
+          </figure>
+        </p>
+        
       <!--
       </section>
       <section id="project-3">
