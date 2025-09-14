@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Capstone Project</title>
-    <link rel="stylesheet" href="/assets/css/year_four.css">
+    <link rel="stylesheet" href="/assets/css/capstone_project.css">
 </head>
 <body>
     <header>
@@ -106,7 +106,10 @@
           project was the most time consuming and took place from October to the
           middle of December. Where we had a couple meetings with our client to
           refine the scope of the project ensuring that our designs were going
-          to meet our clients needs.
+          to meet our clients needs. Unfortunately due to a non disclosure
+          agreement with our client I am not sure what parts of the electrical design I can 
+          share on my portfolio website. If you would like to discuss the
+          electrical design of the project please feel free to contact me and I would be happy to discuss.
         </p>
         
         <h4>Stage 3: Programming</h4>
@@ -115,15 +118,38 @@
           to generate reports containing the data from each cylinder test. This
           stage of the project was the most challenging as it required, studying
           Python and learning how to sort through the data produced by the PLC
-          and HMI programming. I had to work together with my group members to
+          and HMI programming, shown in Figure 1. I had to work together with my group members to
           ensure that the PLC and HMI programming worked seamlessly together, we
           made several revisions to the output of the HMI programming. Initially
           starting with the Data being stored in 2 files, by the end of the
           project the HMI produces 4 data files. This led to multiple changes in
           the Python program to ensure that the data was being sorted out of the
           different files correctly. Allowing the Python program to generate the
-          required graphs and tables for the test report.
+          required graphs and tables for the test report. Figure 1 shows examples of the .txt files
+          that are produced by the HMI, the data contained is arbitrary and does not represent any real test data.
+          It is just an example of the format of the data files to demonstrate what the program is using
+          to generate the test reports. Figure 2 shows an example of a word doc that serves as the template that the program 
+          fills to create each report, using keys.
         </p>
+
+        <figure class="side-by-side-figures">
+          <div class="figure-pair">
+            <div class="figure-half">
+              <img src="/assets/images/Capstone - Figure 1a - Alarm Data.png" alt="Example Alarm Data File" />
+              <p class="sub-caption">(a)</p>
+            </div>
+            <div class="figure-half">
+              <img src="/assets/images/Capstone - Figure 1b - Test Data.png" alt="Example Test Data File" />
+              <p class="sub-caption">(b)</p>
+            </div>
+          </div>
+          <figcaption>Figure 1: Example Alarm .txt File (a), Example Test Data .txt File (b)</figcaption>
+        </figure>
+
+        <figure>
+          <img src="/assets/images/Capstone - Figure 2 - Report Template.png" alt="Report Template Example" class="reduced-size-1" />
+          <figcaption>Figure 2: Report Template Example</figcaption>
+        </figure>
       </section>
     </main>
     <footer>
