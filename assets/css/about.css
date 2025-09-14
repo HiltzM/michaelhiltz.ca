@@ -46,12 +46,12 @@ nav ul li a {
     display: none;
 }
 
-h1, h2 {
+h1, h2, h3 {
     margin: 0 0 16px 0;
     font-weight: 600;
 }
 
-h2 {
+h2, h3 {
     color: #4b9988;
     border-left: 4px solid #6c5b7b;
     padding-left: 12px;
