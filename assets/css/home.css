@@ -165,6 +165,33 @@ footer {
     display: block;
 }
 
+#current-reading {
+    background: #fff;
+    margin-bottom: 32px;
+    padding: 28px 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.07);
+    transition: box-shadow 0.2s;
+}
+
+#current-reading:hover {
+    box-shadow: 0 4px 20px rgba(44, 62, 80, 0.13);
+}
+
+#current-reading h3 {
+    color: #4b9988;
+    margin-top: 20px;
+    margin-bottom: 12px;
+}
+
+#current-reading ul {
+    padding-left: 24px;
+}
+
+#current-reading li {
+    margin-bottom: 8px;
+}
+
 @media (max-width: 700px) {
     main {
         padding: 0 8px;
