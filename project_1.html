@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Circuit Design and Simulation</title>
+    <link rel="stylesheet" href="/assets/css/project_1.css" />
+  </head>
+  <body>
+    <header>
+      <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+      <h1>Circuit Design and Simulation</h1>
+      <nav id="nav-menu" class="hidden">
+        <ul>
+          <li><a href="home.html">Home</a></li>
+          <li class="has-submenu">
+            <a href="projects.html">Projects</a>
+            <ul class="submenu">
+              <li><a href="capstone_project.html">Capstone Project</a></li>
+              <li>
+                <a href="university_projects.html">University Projects</a>
+              </li>
+              <li><a href="personal_projects.html">Personal Projects</a></li>
+            </ul>
+          </li>
+          <li><a href="about.html">About Me</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="Overview">
+        <h2>Overview</h2>
+        <p>
+          In this ongoing project, I am bridging the gap between theoretical
+          knowledge and practical application by moving beyond textbooks into
+          hands-on circuit design and layout work. Using Analog Integrated
+          Circuit Design by David A. Johns and Ken Martin as a source of
+          practice problems, I work through end-of-chapter exercises to design
+          circuits, simulate them in LTSpice, and create layouts in KLayout.
+          This process not only strengthens my technical skills in simulation
+          and layout design but also supports my transition from student to
+          professional in the field of semiconductor design.
+        </p>
+      </section>
+
+      <section id="Beginning-the-Project">
+        <h3>Initial Circuits</h3>
+        <p>The first circuit I made a layout for was a simple NMOS current mirror. The 
+          schematic for the circuit can be seen in Figure 1. 
+          I made three different masks. The first of which makes the current mirror 
+          using two separate devices. The second mask creates the current mirror 
+          using an active region with separate sources. The third mask creates the
+          circuit using two active regions that utilize a common source, and a common gate. 
+          All of these layouts can be seen in Figure 1 below. The different layers of 
+          the masks are shown in Figure 2. The devices are all made using a 0.8um CMOS
+          process. Reflecting on these layouts, I can see several areas for improvement. 
+          For instance, I'm not sure the first layout is very efficient in its use of space,
+          and the third layout could benefit from better symmetry to enhance performance. Additionally, 
+          I did not include any well taps in any of the layouts, which could lead to
+          issues with latch-up in a real-world application. There could also be improvements made to the 
+          gates of the transistors to reduce resistance and improve matching between the transistors.
+          These layouts were all made without any design rule checking, which is something I plan to 
+          address in the next phase of this project.
+        </p>
+        <figure>
+          <img
+            src="/assets/images/Project 1 - Figure 1 - Simple Current Mirrors.png"
+            alt="Current Mirror Layouts"
+          />
+          <figcaption>Figure 1: Current Mirror Layouts</figcaption>
+        </figure>
+          <figure>
+            <img
+              src="/assets/images/Project 1 - Figure 2 - Mask Layers.png"
+              alt="Current Mirror Layout Layers"
+            />
+            <figcaption>Figure 2: Current Mirror Layout Layers</figcaption>
+          </figure>
+          <p>
+           These transistors are made using multiple fingers to shorten the overall width of the transistors.
+           This reduces the overall area of the layout while maintaining the overall gate area of the devices.
+           Realistically, these are the equivalent of having multiple transistors in parallel, 
+           which also helps to reduce the effects of variations in the manufacturing process on 
+           the performance of the transistors. The width of the transistors was designed to be
+           100um with a gate length of 0.8um. Given that both sides of the circuits have the 
+           same width, the output current will be a 1 to 1 copy of the reference current.
+          </p>
+      </section>
+
+      <section id="DRC-Development">
+        <h3>DRC-Development</h3>
+        <h4>The problem</h4>
+        <p>
+          While working on a layout after completing question 7 at the end of
+          chapter 3 in the textbook, I began the layout of the circuit. When I
+          realized that making the layout was a waste of time if I could not check
+          the layout against design rules. This led to another realization: I
+          did not have a full set of design rules, and that the software I was
+          using initially (LayoutEditor) did not have a DRC function. So I
+          switched to KLayout, which does have DRC functionality, but I still
+          needed to create the DRC files for the different CMOS processes I was
+          working with.
+        </p>
+        <h4>Current Status</h4>
+        <p>
+          After some research, all I was able to find was a set of rules for a
+          0.18um process and a full set of lambda based design rules. Using
+          these two sources I am in the process of creating the DRC files
+          for the 0.18um process. Then I will use the lambda rules to create DRC
+          files for other processes.
+        </p>
+      </section>
+      <section id="next-steps">
+        <h4>Next Steps</h4>
+        <p>
+          After completing the DRC files, I will need to begin working on layout
+          versus schematic (LVS) scripts to be able to fully verify my layouts.
+          Another potential next step is to figure out how to
+          perform parasitic extraction on the layouts I create in KLayout. This
+          is not strictly necessary for the goals of this project, but it would
+          be a useful skill for me to develop, and would help me learn how to
+          improve my layouts to reduce parasitics.
+        </p>
+      </section>
+      <p style="text-align: center; margin-top: 30px">
+        <a href="#top">↑ Back to Top</a>
+      </p>
+    </main>
+    <footer>
+      <p>&copy; 2025 Michael Hiltz</p>
+    </footer>
+    <script src="/assets/js/scripts.js"></script>
+  </body>
+</html>

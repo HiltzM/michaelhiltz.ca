@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Projects</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/assets/css/personal_projects.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+      <h1>Personal Projects</h1>
+      <nav id="nav-menu" class="hidden">
+        <ul>
+          <li><a href="home.html">Home</a></li>
+          <li class="has-submenu">
+            <a href="projects.html">Projects</a>
+            <ul class="submenu">
+              <li><a href="capstone_project.html">Capstone Project</a></li>
+              <li>
+                <a href="university_projects.html">University Projects</a>
+              </li>
+            </ul>
+          </li>
+          <li><a href="about.html">About Me</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="overview">
+        <h2>Personal Projects Overview</h2>
+        <p>
+          This section showcases my personal projects and independent learning
+          initiatives. These projects demonstrate my passion for continuous
+          learning, self-directed skill development, and pursuit of knowledge
+          and experience.
+        </p>
+        <p>
+          Each project reflects my commitment to deepening my understanding of
+          semiconductor design, integrated circuits, and electrical engineering
+          fundamentals through skill development and self-study.
+        </p>
+      </section>
+
+      <section id="project-1">
+        <h2>Circuit Design and Simulation</h2>
+        <p>
+          In this project I am transitioning from the theoretical knowledge
+          found in the textbooks I am reading to the practical application of
+          it, through circuit design and simulation using LTSpice, and layout
+          design using KLayout.
+        </p>
+        <h3>Overview</h3>
+        <p>
+          The purpose of this project is to build and develop skills that will aid
+          me in transitioning from a student to a professional in the field of
+          semiconductor design. I will be utilizing the end of chapter questions
+          in Analog Integrated Circuit Design by David A. Johns and Ken Martin
+          as a source of practice problems to solve. The goal is to work through
+          each problem, then to simulate the designed circuit in LTSpice, and
+          finally create a layout for the circuit in KLayout. This is an ongoing
+          project.
+        </p>
+        <h3>Technical Details</h3>
+        <ul>
+          <li>Circuit simulation in LTSpice</li>
+          <li>Layout design in KLayout</li>
+          <li>Develop and practice LVS and DRC checks</li>
+        </ul>
+        <h3>Outcomes and Learning</h3>
+        <p>
+          This project is still in its infancy. I am currently developing the
+          DRC files for the different CMOS processes found in the textbook.
+        </p>
+      </section>
+
+      <!--
+      <section id="project-placeholder-2">
+        <h2>Project Title 2</h2>
+        <p>Description of your second personal project will go here.</p>
+        <h3>Overview</h3>
+        <p>Brief overview of the project objectives and motivation.</p>
+        <h3>Technical Details</h3>
+        <ul>
+          <li>Key technical aspect or tool used</li>
+          <li>Another important technical detail</li>
+          <li>Implementation approach or methodology</li>
+        </ul>
+        <h3>Outcomes and Learning</h3>
+        <p>What you learned and accomplished through this project.</p>
+      </section>
+      -->
+    </main>
+    <footer>
+      <p>&copy; 2025 Michael Hiltz</p>
+    </footer>
+    <script>
+      function toggleMenu() {
+        var menu = document.getElementById("nav-menu");
+        menu.classList.toggle("hidden");
+      }
+    </script>
+  </body>
+</html>
