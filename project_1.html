@@ -45,14 +45,21 @@
 
       <section id="Beginning-the-Project">
         <h3>Initial Circuits</h3>
-        <p>The first circuit I made a layout for was a simple NMOS current mirror. The 
+        <figure class="figure-wrap">
+          <img
+            src="/assets/images/Project 1 - Figure 1 - Current Mirror Schematic.png"
+            alt="Current Mirror Schematic"
+          />
+          <figcaption>Figure 1: Current Mirror Schematic</figcaption>
+        </figure>
+        <p class="text-wrap">The first circuit I made a layout for was a simple NMOS current mirror. The 
           schematic for the circuit can be seen in Figure 1. 
           I made three different masks. The first of which makes the current mirror 
           using two separate devices. The second mask creates the current mirror 
           using an active region with separate sources. The third mask creates the
           circuit using two active regions that utilize a common source, and a common gate. 
-          All of these layouts can be seen in Figure 1 below. The different layers of 
-          the masks are shown in Figure 2. The devices are all made using a 0.8um CMOS
+          All of these layouts can be seen in Figure 2 below. The different layers of 
+          the masks are shown in Figure 3. The devices are all made using a 0.8um CMOS
           process. Reflecting on these layouts, I can see several areas for improvement. 
           For instance, I'm not sure the first layout is very efficient in its use of space,
           and the third layout could benefit from better symmetry to enhance performance. Additionally, 
@@ -62,20 +69,22 @@
           These layouts were all made without any design rule checking, which is something I plan to 
           address in the next phase of this project.
         </p>
-        <figure>
-          <img
-            src="/assets/images/Project 1 - Figure 1 - Simple Current Mirrors.png"
-            alt="Current Mirror Layouts"
-          />
-          <figcaption>Figure 1: Current Mirror Layouts</figcaption>
-        </figure>
+        <div class="figures-container">
           <figure>
             <img
-              src="/assets/images/Project 1 - Figure 2 - Mask Layers.png"
+              src="/assets/images/Project 1 - Figure 2 - Simple Current Mirrors.png"
+              alt="Current Mirror Layouts"
+            />
+            <figcaption>Figure 2: Current Mirror Layouts</figcaption>
+          </figure>
+          <figure class="figure-wrap-below">
+            <img
+              src="/assets/images/Project 1 - Figure 3 - Mask Layers.png"
               alt="Current Mirror Layout Layers"
             />
-            <figcaption>Figure 2: Current Mirror Layout Layers</figcaption>
+            <figcaption>Figure 3: Current Mirror Layout Layers</figcaption>
           </figure>
+        </div>
           <p>
            These transistors are made using multiple fingers to shorten the overall width of the transistors.
            This reduces the overall area of the layout while maintaining the overall gate area of the devices.
