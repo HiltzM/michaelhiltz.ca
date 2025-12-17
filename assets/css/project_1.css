@@ -110,6 +110,11 @@ img {
     height: auto;
 }
 
+.reduced-size-2 {
+    width: 70%;
+    height: auto;
+}
+
 figure {
     margin: 0 0 32px 0;
     text-align: center;
@@ -119,6 +124,49 @@ figcaption {
     font-size: 0.95em;
     color: #888;
     margin-top: 8px;
+}
+
+/* Floating figure for text wrap */
+.figure-wrap {
+    float: right;
+    width: 33%;
+    margin: 0 0 16px 20px;
+    text-align: center;
+}
+
+.figure-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.text-wrap {
+    text-align: justify;
+}
+
+/* Figure positioned below floating figure */
+.figure-wrap-below {
+    width: 48%;
+    text-align: center;
+    margin: 0;
+}
+
+.figure-wrap-below img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Container for side-by-side figures */
+.figures-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin: 32px 0;
+}
+
+.figures-container figure {
+    margin: 0;
 }
 
 footer {
@@ -188,7 +236,27 @@ footer {
     .reduced-size-1 {
         width: 80%;
     }
+    .reduced-size-2 {
+        width: 90%;
+    }
     .submenu {
         margin-left: 20px;
+    }
+    .figure-wrap {
+        float: none;
+        width: 80%;
+        margin: 16px auto;
+        display: block;
+    }
+    .figure-wrap-below {
+        width: 100%;
+        margin: 12px 0;
+    }
+    .figures-container {
+        flex-direction: column;
+        gap: 16px;
+    }
+    .text-wrap {
+        text-align: left;
     }
 }
