@@ -34,7 +34,7 @@
           In this ongoing project, I am bridging the gap between theoretical
           knowledge and practical application by moving beyond textbooks into
           hands-on circuit design and layout work. Using Analog Integrated
-          Circuit Design by Tony C. Carusone, David A. Johns, and Kenneth W. Martin as a source of
+          Circuit Design by Tony C. Carusone,David A. Johns and Kenneth W. Martin as a source of
           practice problems, I work through end-of-chapter exercises to design
           circuits, simulate them in LTSpice, and create layouts in KLayout.
           This process not only strengthens my technical skills in simulation
@@ -112,17 +112,308 @@
         </p>
         <h4>Current Status</h4>
         <p>
-          After some research, all I was able to find was a set of rules for a
-          0.18um process and a full set of lambda based design rules. Using
-          these two sources I am in the process of creating the DRC files
-          for the 0.18um process. Then I will use the lambda rules to create DRC
-          files for other processes.
+          After some research, I was able to find a set of design rules for a
+          0.18µm. Using the information from those design rules, I was able to
+          create a rudimentary DRC file for the 0.18µm CMOS process. From there I
+          scaled the dimensions to create DRC files for the 0.8µm, 0.35µm, and 
+          45nm CMOS processes. 
         </p>
+        <h4>DRC File Example</h4>
+        <p>
+          Below is an example of the 0.18µm CMOS DRC file I created. You can
+          scroll through the file to see the various design rules and constraints.
+          This file is still relatively basic but as I don't have access to actual
+          manufacturing design rules, it will suffice for practicing the layout of 
+          basic circuits.
+        </p>
+        <div class="drc-file-container">
+          <pre class="drc-file-content"><code># 0.18µm CMOS Design Rules Check (DRC) File
+# ===============================
+# 0.18 µm CMOS DRC (Ruby, KLayout)
+# Scaffold v0.1 — structure first, rules later
+# ===============================
+
+report("0p18um")
+
+# -------------------------------
+# Layer input definitions
+# -------------------------------
+nwell    = input(  1, 0)    # N-Well 
+nimp     = input(  2, 0)    # N+ implant
+pimp     = input(  3, 0)    # P+ implant 
+active   = input(  4, 0)    # Diffusion/Active
+poly     = input(  5, 0)    # Polysilicon
+
+# Metals
+metal1   = input( 8, 0) 
+metal2   = input( 10, 0) 
+metal3   = input( 12, 0) 
+metal4   = input( 14, 0) 
+metal5   = input( 16, 0) 
+metal6   = input( 18, 0)
+
+# Cuts and vias
+
+cont_a   = input( 6, 0)    # Contact from M1 to Active 
+cont_p   = input( 7, 0)    # Contact from M1 to Poly
+via1     = input( 9, 0)    # M1 <-> M2
+via2     = input( 11, 0)    # M2 <-> M3
+via3     = input( 13, 0)    # M3 <-> M4
+via4     = input( 15, 0)    # M4 <-> M5
+via5     = input( 17, 0)    # M5 <-> M
+
+# -------------------------------
+# Single-Layer Rules
+# -------------------------------
+
+# === N-Well ===
+nwell_narrow = nwell.width("<", 1.0)
+nwell_narrow.output("NW.W.1", "N-Well width < 1.0 µm")
+
+nwell_close = nwell.space("<", 1.4)
+nwell_close.output("NW.S.1", "N-Well spacing < 1.4 µm")
+
+# === N+ Implant ===
+nimp_narrow = nimp.width("<", 0.48)
+nimp_narrow.output("NIMP.W.1", "N+ implant width < 0.48 µm")
+
+nimp_close = nimp.space("<", 0.48)
+nimp_close.output("NIMP.S.1", "N+ implant spacing < 0.48 µm")
+
+nimp_small_area = nimp.with_area("<", 0.36)
+nimp_small_area.output("NIMP.A.1", "N+ implant area < 0.36 µm²")
+
+# === P+ Implant ===
+pimp_narrow = pimp.width("<", 0.48)
+pimp_narrow.output("PIMP.W.1", "P+ implant width < 0.48 µm")
+
+pimp_close = pimp.space("<", 0.48)
+pimp_close.output("PIMP.S.1", "P+ implant spacing < 0.48 µm")
+
+pimp_small_area = pimp.with_area("<", 0.36)
+pimp_small_area.output("PIMP.A.1", "P+ implant area < 0.36 µm²")
+
+# === Active ===
+diff_narrow = active.width("<", 0.28)
+diff_narrow.output("active.W.1", "Active width < 0.28 µm")
+
+diff_close = active.space("<", 0.32)
+diff_close.output("active.S.1", "Active spacing < 0.32 µm")
+
+# === Poly ===
+poly_narrow = poly.width("<", 0.18)
+poly_narrow.output("POLY.W.1", "Poly width < 0.18 µm")
+
+poly_close = poly.space("<", 0.28)
+poly_close.output("POLY.S.1", "Poly spacing < 0.28 µm")
+
+# === Metal 1 – 4 ===
+[metal1, metal2, metal3, metal4].each_with_index do |metal, i|
+  layer = i + 1
+  metal_narrow = metal.width("<", 0.32)
+  metal_narrow.output("M#{layer}.W.1", "Metal#{layer} width < 0.32 µm")
+
+  metal_close = metal.space("<", 0.32)
+  metal_close.output("M#{layer}.S.1", "Metal#{layer} spacing < 0.32 µm")
+
+  metal_small_area = metal.with_area("<", 0.2)
+  metal_small_area.output("M#{layer}.A.1", "Metal#{layer} area < 0.2 µm²")
+end
+
+# === Metal 5 – 6 ===
+[metal5, metal6].each_with_index do |metal, i|
+  layer = i + 5
+  metal_narrow = metal.width("<", 0.64)
+  metal_narrow.output("M#{layer}.W.1", "Metal#{layer} width < 0.64 µm")
+
+  metal_close = metal.space("<", 0.64)
+  metal_close.output("M#{layer}.S.1", "Metal#{layer} spacing < 0.64 µm")
+end
+
+# ----------------------------------------
+# CUT TO ACTIVE (cont_a)
+# ----------------------------------------
+
+# Minimum width/height
+ct_a_small = cont_a.width("<", 0.24) | cont_a.height("<", 0.24)
+ct_a_small.output("CT-A.DIM.1", "Cut-to-active width/height < 0.24 µm")
+
+# Minimum spacing
+ct_a_close = cont_a.space("<", 0.32)
+ct_a_close.output("CT-A.S.1", "Cut-to-active spacing < 0.32 µm")
+
+# Minimum overlap to Active
+ct_a_act_encl = cont_a.enclosed_by(active, 0.04, projection: true)
+(cont_a - ct_a_act_encl).output("CT-A.E.ACT.1",
+  "Cut-to-active not enclosed by Active by ≥ 0.04 µm")
+
+# Minimum overlap to Metal1
+ct_a_m1_encl = cont_a.enclosed_by(metal1, 0.02, projection: true)
+(cont_a - ct_a_m1_encl).output("CT-A.E.M1.1",
+  "Cut-to-active not enclosed by Metal1 by ≥ 0.02 µm")
+  
+# ----------------------------------------
+# CUT TO POLY (cont_p)
+# ----------------------------------------
+
+# Minimum width/height
+ct_p_small = cont_p.width("<", 0.24) | cont_p.height("<", 0.24)
+ct_p_small.output("CT-P.DIM.1", "Cut-to-poly width/height < 0.24 µm")
+
+# Minimum spacing
+ct_p_close = cont_p.space("<", 0.32)
+ct_p_close.output("CT-P.S.1", "Cut-to-poly spacing < 0.32 µm")
+
+# Minimum overlap to Poly
+ct_p_poly_encl = cont_p.enclosed_by(poly, 0.04, projection: true)
+(cont_p - ct_p_poly_encl).output("CT-P.E.POLY.1",
+  "Cut-to-poly not enclosed by Poly by ≥ 0.04 µm")
+
+# Minimum overlap to Metal1
+ct_p_m1_encl = cont_p.enclosed_by(metal1, 0.02, projection: true)
+(cont_p - ct_p_m1_encl).output("CT-P.E.M1.1",
+  "Cut-to-poly not enclosed by Metal1 by ≥ 0.02 µm")
+
+# Forbidden over Active
+ct_p_over_active = cont_p & active
+ct_p_over_active.output("CT-P.FORB.ACT.1",
+  "Cut-to-poly is not allowed over Active")
+  
+# ----------------------------------------
+# VIA1, VIA2, VIA3 (same rules)
+# ----------------------------------------
+
+[
+  [via1, metal1, metal2, 1],
+  [via2, metal2, metal3, 2],
+  [via3, metal3, metal4, 3]
+].each do |via, lower, upper, idx|
+
+  # Minimum width/height
+  via_small = via.width("<", 0.32) | via.height("<", 0.32)
+  via_small.output("V#{idx}.DIM.1", "Via#{idx} width/height < 0.32 µm")
+
+  # Minimum spacing
+  via_close = via.space("<", 0.32)
+  via_close.output("V#{idx}.S.1", "Via#{idx} spacing < 0.32 µm")
+
+  # Lower metal enclosure
+  via_lower_encl = via.enclosed_by(lower, 0.08, projection: true)
+  (via - via_lower_encl).output("V#{idx}.E.LOW.1",
+    "Via#{idx} not enclosed by lower metal by ≥ 0.08 µm")
+
+  # Upper metal enclosure
+  via_upper_encl = via.enclosed_by(upper, 0.04, projection: true)
+  (via - via_upper_encl).output("V#{idx}.E.UP.1",
+    "Via#{idx} not enclosed by upper metal by ≥ 0.04 µm")
+end
+
+# ----------------------------------------
+# VIA4 (metal4 ↔ metal5)
+# ----------------------------------------
+
+# Minimum width/height
+via4_small = via4.width("<", 0.32) | via4.height("<", 0.32)
+via4_small.output("V4.DIM.1", "Via4 width/height < 0.32 µm")
+
+# Minimum spacing
+via4_close = via4.space("<", 0.32)
+via4_close.output("V4.S.1", "Via4 spacing < 0.32 µm")
+
+# Lower metal enclosure (metal4)
+via4_lower_encl = via4.enclosed_by(metal4, 0.16, projection: true)
+(via4 - via4_lower_encl).output("V4.E.LOW.1",
+  "Via4 not enclosed by Metal4 by ≥ 0.16 µm")
+
+# Upper metal enclosure (metal5)
+via4_upper_encl = via4.enclosed_by(metal5, 0.08, projection: true)
+(via4 - via4_upper_encl).output("V4.E.UP.1",
+  "Via4 not enclosed by Metal5 by ≥ 0.08 µm")
+
+# ----------------------------------------
+# VIA5 (metal5 ↔ metal6)
+# ----------------------------------------
+
+# Minimum width/height
+via5_small = via5.width("<", 0.6) | via5.height("<", 0.6)
+via5_small.output("V5.DIM.1", "Via5 width/height < 0.6 µm")
+
+# Minimum spacing
+via5_close = via5.space("<", 0.6)
+via5_close.output("V5.S.1", "Via5 spacing < 0.6 µm")
+
+# Lower metal enclosure (metal5)
+via5_lower_encl = via5.enclosed_by(metal5, 0.02, projection: true)
+(via5 - via5_lower_encl).output("V5.E.LOW.1",
+  "Via5 not enclosed by Metal5 by ≥ 0.02 µm")
+
+# Upper metal enclosure (metal6)
+via5_upper_encl = via5.enclosed_by(metal6, 0.02, projection: true)
+(via5 - via5_upper_encl).output("V5.E.UP.1",
+  "Via5 not enclosed by Metal6 by ≥ 0.02 µm")
+
+# ----------------------------------------
+# ACTIVE REGION RULES
+# ----------------------------------------
+
+gate = active & poly
+
+# Minimum gate length: 0.18 µm
+gate_short = gate.width("<", 0.18)
+gate_short.output("GATE.L.1", "Gate length < 0.18 µm")
+
+# Poly overshoot over active: 0.2 µm
+poly_overshoot = gate.enclosed_by(poly, 0.2, projection: true)
+(gate - poly_overshoot).output("GATE.O.1",
+  "Poly overshoot over active < 0.2 µm")
+
+gate_width = gate.height("<", 0.28)
+gate_width.output("GATE.W.1", "Gate width < 0.28 µm")
+
+# Poly spacing to implant edge: 0.4 µm
+poly_to_implant = poly.space(nimp | pimp, "<", 0.4)
+poly_to_implant.output("POLY.IMP.S.1",
+  "Poly spacing to implant < 0.4 µm")
+  
+gate_to_active_edge = gate.space(active, "<", 0.36)
+gate_to_active_edge.output("GATE.ACT.S.1",
+  "Gate spacing to active edge < 0.36 µm")
+
+poly_outside_active = poly - gate
+poly_outside_to_active = poly_outside_active.space(active, "<", 0.16)
+poly_outside_to_active.output("POLY.ACT.S.1",
+  "Poly outside active spacing to active < 0.16 µm")
+
+poly_to_cont_a = poly.space(cont_a, "<", 0.14)
+poly_to_cont_a.output("POLY.CT-A.S.1",
+  "Poly spacing to cut-to-active < 0.14 µm")
+
+active_to_cont_p = active.space(cont_p, "<", 0.14)
+active_to_cont_p.output("ACT.CT-P.S.1",
+  "Active spacing to cut-to-poly < 0.14 µm")
+
+nwell_to_active = nwell.space(active, "<", 0.4)
+nwell_to_active.output("NW.ACT.S.1",
+  "Nwell spacing to active < 0.4 µm")
+
+cont_a_to_implant = cont_a.space(nimp | pimp, "<", 0.2)
+cont_a_to_implant.output("CT-A.IMP.S.1",
+  "Cut-to-active spacing to implant < 0.2 µm")
+
+# Implant overlap over active: 0.26 µm
+nimp_encl = active.enclosed_by(nimp, 0.26, projection: true)
+(active - nimp_encl).output("NIMP.ACT.E.1",
+  "N+ implant overlap over active < 0.26 µm")
+
+pimp_encl = active.enclosed_by(pimp, 0.26, projection: true)
+(active - pimp_encl).output("PIMP.ACT.E.1",
+  "P+ implant overlap over active < 0.26 µm")</code></pre>
+        </div>
       </section>
       <section id="next-steps">
         <h4>Next Steps</h4>
         <p>
-          After completing the DRC files, I will need to begin working on layout
+          Now that the DRC files are complete, I will need to begin working on layout
           versus schematic (LVS) scripts to be able to fully verify my layouts.
           Another potential next step is to figure out how to
           perform parasitic extraction on the layouts I create in KLayout. This
@@ -141,5 +432,3 @@
     <script src="/assets/js/scripts.js"></script>
   </body>
 </html>
-
-
