@@ -34,7 +34,7 @@
           In this ongoing project, I am bridging the gap between theoretical
           knowledge and practical application by moving beyond textbooks into
           hands-on circuit design and layout work. Using Analog Integrated
-          Circuit Design by Tony C. Carusone,David A. Johns and Kenneth W. Martin as a source of
+          Circuit Design by Tony C. Carusone, David A. Johns and Kenneth W. Martin as a source of
           practice problems, I work through end-of-chapter exercises to design
           circuits, simulate them in LTSpice, and create layouts in KLayout.
           This process not only strengthens my technical skills in simulation
@@ -58,10 +58,10 @@
           using two separate devices. The second mask creates the current mirror 
           using an active region with separate sources. The third mask creates the
           circuit using two active regions that utilize a common source, and a common gate. 
-          All of these layouts can be seen in Figure 2 below. The different layers of 
+          All of these layouts can be seen in Figure 2. The different layers of 
           the masks are shown in Figure 3. The devices are all made using a 0.8um CMOS
           process. Reflecting on these layouts, I can see several areas for improvement. 
-          For instance, I'm not sure the first layout is very efficient in its use of space,
+          For instance, the first layout may not be very efficient in its use of space,
           and the third layout could benefit from better symmetry to enhance performance. Additionally, 
           I did not include any well taps in any of the layouts, which could lead to
           issues with latch-up in a real-world application. There could also be improvements made to the 
@@ -86,24 +86,24 @@
           </figure>
         </div>
           <p>
-           These transistors are made using multiple fingers to shorten the overall width of the transistors.
-           This reduces the overall area of the layout while maintaining the overall gate area of the devices.
-           Realistically, these are the equivalent of having multiple transistors in parallel, 
+           These transistors are constructed using multiple fingers to reduce the overall width of each transistor.
+           This approach reduces the total layout area while maintaining the overall gate area of the devices.
+           Effectively, this is equivalent to having multiple transistors in parallel, 
            which also helps to reduce the effects of variations in the manufacturing process on 
            the performance of the transistors. The width of the transistors was designed to be
            100um with a gate length of 0.8um. Given that both sides of the circuits have the 
-           same width, the output current will be a 1 to 1 copy of the reference current.
+           same width, the output current will be a 1:1 copy of the reference current.
           </p>
       </section>
 
       <section id="DRC-Development">
-        <h3>DRC-Development</h3>
+        <h3>DRC Development</h3>
         <h4>The problem</h4>
         <p>
           While working on a layout after completing question 7 at the end of
-          chapter 3 in the textbook, I began the layout of the circuit. When I
-          realized that making the layout was a waste of time if I could not check
-          the layout against design rules. This led to another realization: I
+          chapter 3 in the textbook, I began designing the circuit layout. I then
+          realized that creating the layout would be ineffective if I could not verify
+          it against design rules. This led to another realization: I
           did not have a full set of design rules, and that the software I was
           using initially (LayoutEditor) did not have a DRC function. So I
           switched to KLayout, which does have DRC functionality, but I still
@@ -113,8 +113,8 @@
         <h4>Current Status</h4>
         <p>
           After some research, I was able to find a set of design rules for a
-          0.18µm. Using the information from those design rules, I was able to
-          create a rudimentary DRC file for the 0.18µm CMOS process. From there I
+          0.18µm process. Using the information from those design rules, I was able to
+          create a rudimentary DRC file for the 0.18µm CMOS process. From there, I
           scaled the dimensions to create DRC files for the 0.8µm, 0.35µm, and 
           45nm CMOS processes. 
         </p>
@@ -122,7 +122,7 @@
         <p>
           Below is an example of the 0.18µm CMOS DRC file I created. You can
           scroll through the file to see the various design rules and constraints.
-          This file is still relatively basic but as I don't have access to actual
+          This file is still relatively basic, but since I don't have access to actual
           manufacturing design rules, it will suffice for practicing the layout of 
           basic circuits.
         </p>
@@ -413,8 +413,8 @@ pimp_encl = active.enclosed_by(pimp, 0.26, projection: true)
       <section id="next-steps">
         <h4>Next Steps</h4>
         <p>
-          Now that the DRC files are complete, I will need to begin working on layout
-          versus schematic (LVS) scripts to be able to fully verify my layouts.
+          Now that the DRC files are complete, I need to begin working on layout
+          versus schematic (LVS) scripts to fully verify my layouts.
           Another potential next step is to figure out how to
           perform parasitic extraction on the layouts I create in KLayout. This
           is not strictly necessary for the goals of this project, but it would
