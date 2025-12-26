@@ -54,9 +54,9 @@
         </figure>
         <p class="text-wrap">The first circuit I made a layout for was a simple NMOS current mirror. The 
           schematic for the circuit can be seen in Figure 1. 
-          I made three different masks. The first of which makes the current mirror 
-          using two separate devices. The second mask creates the current mirror 
-          using an active region with separate sources. The third mask creates the
+          I made three different masks. The first of which made the current mirror 
+          using two separate devices. The second mask created the current mirror 
+          using an active region with separate sources. The third mask created the
           circuit using two active regions that utilize a common source, and a common gate. 
           All of these layouts can be seen in Figure 2. The different layers of 
           the masks are shown in Figure 3. The devices are all made using a 0.8um CMOS
@@ -91,7 +91,7 @@
            Effectively, this is equivalent to having multiple transistors in parallel, 
            which also helps to reduce the effects of variations in the manufacturing process on 
            the performance of the transistors. The width of the transistors was designed to be
-           100um with a gate length of 0.8um. Given that both sides of the circuits have the 
+           100µm with a gate length of 0.8µm. Given that both sides of the circuits have the
            same width, the output current will be a 1:1 copy of the reference current.
           </p>
       </section>
@@ -409,17 +409,157 @@ pimp_encl = active.enclosed_by(pimp, 0.26, projection: true)
 (active - pimp_encl).output("PIMP.ACT.E.1",
   "P+ implant overlap over active < 0.26 µm")</code></pre>
         </div>
+      <p>2025/12/23</p>
+      </section>
+      <section id="LVS-Development">
+        <h3>LVS Development</h3>
+        <p>
+          The next step in this project is to begin developing layout versus
+          schematic (LVS) scripts to fully verify my layouts. This will involve
+          creating netlists from both the schematic and layout, and then
+          comparing them to ensure they match. This is a crucial step in the
+          verification process, as it ensures that the layout accurately
+          represents the intended circuit design. You can see the script I have
+          made down below. As I am new to writing LVS scripts and I am just beginning
+          this project, I expect that this script is just going to be a starting point.
+          As I change the script and improve it, I will add it in future updates on this page.
+        </p>
+        <div class="lvs-file-container">
+    <div class="lvs-file-content">
+        <code>
+# ========================================
+# LVS – analog CMOS (KLayout + LTspice)
+# ========================================
+
+report("lvs_report")
+
+# --- 1. Layer mapping (replace with your real GDS numbers) ---
+
+nwell    = input( 1, 0)   # N-Well
+nimp     = input( 2, 0)   # N+ implant
+pimp     = input( 3, 0)   # P+ implant
+active   = input( 4, 0)   # Diffusion/Active
+poly     = input( 5, 0)   # Polysilicon
+
+cont_a   = input( 6, 0)   # Contact from M1 to Active
+cont_p   = input( 7, 0)   # Contact from M1 to Poly
+
+metal1   = input( 8, 0)
+via1     = input( 9, 0)   # M1 <-> M2
+metal2   = input(10, 0)
+via2     = input(11, 0)   # M2 <-> M3
+metal3   = input(12, 0)
+via3     = input(13, 0)   # M3 <-> M4
+metal4   = input(14, 0)
+via4     = input(15, 0)   # M4 <-> M5
+metal5   = input(16, 0)
+via5     = input(17, 0)   # M5 <-> M6
+metal6   = input(18, 0)
+
+
+# --- 2. Connectivity ---
+
+# Contacts to M1
+connect(cont_a, active, metal1)
+connect(cont_p, poly,   metal1)
+
+# Vias between metals
+connect(via1, metal1, metal2)
+connect(via2, metal2, metal3)
+connect(via3, metal3, metal4)
+connect(via4, metal4, metal5)
+connect(via5, metal5, metal6)
+
+# You can also define "connect(metal1, metal1)" if slotting or OPC breaks shapes
+
+
+# --- 3. Device recognition ---
+
+gate = active & poly
+
+# NMOS in P-well (no nwell) with N+ implant
+nmos_active = active & nimp & ~nwell
+nmos_gate   = gate & nmos_active
+nmos_sd     = nmos_active - nmos_gate
+
+# PMOS in N-well with P+ implant
+pmos_active = active & pimp & nwell
+pmos_gate   = gate & pmos_active
+pmos_sd     = pmos_active - pmos_gate
+
+# NMOS devices
+nmos_devs = nmos_gate.device(
+  nmos_sd,   # source/drain
+  poly,      # gate conductor
+  nil,       # bulk (we'll infer from well)
+  "nmos"     # device name to match SPICE
+)
+
+# PMOS devices
+pmos_devs = pmos_gate.device(
+  pmos_sd,
+  poly,
+  nwell,     # bulk in N-well
+  "pmos"
+)
+
+# Simple poly resistor (between its two terminals)
+r_devs = rpoly.device(
+  metal1,    # first terminal where it connects to M1
+  metal1,    # second terminal (other end)
+  nil,
+  "R"        # SPICE resistor name
+)
+
+# Simple MIM capacitor between mim (top) and mim_bot (bottom)
+c_devs = mim.device(
+  mim_bot,
+  nil,
+  nil,
+  "C"        # SPICE capacitor name
+)
+
+
+# --- 4. Netlist extraction from layout ---
+
+layout_nl = extract_netlist("layout")
+
+# Optional: name mapping for global nets
+# map_nets(layout_nl, { "VDD" => "VDD!", "VSS" => "0" })
+
+
+# --- 5. Read LTspice netlist ---
+
+# This file should contain .subckt matching the layout top cell name
+# e.g., .subckt opamp_core INP INN OUT VDD VSS
+schematic_nl = read_netlist("opamp_core.spice", "schematic")
+
+
+# --- 6. Device and net mapping if names differ ---
+
+# Example if LTspice uses different names:
+# map_devices(schematic_nl, layout_nl, { "M" => "nmos", "Mp" => "pmos" })
+# map_nets(schematic_nl, layout_nl, { "0" => "VSS" })
+
+
+# --- 7. Perform LVS comparison ---
+
+compare(schematic_nl, layout_nl)
+
+        </code>
+    </div>
+</div>
+<p>2025/12/24</p>
       </section>
       <section id="next-steps">
         <h4>Next Steps</h4>
         <p>
-          Now that the DRC files are complete, I need to begin working on layout
-          versus schematic (LVS) scripts to fully verify my layouts.
-          Another potential next step is to figure out how to
-          perform parasitic extraction on the layouts I create in KLayout. This
-          is not strictly necessary for the goals of this project, but it would
-          be a useful skill for me to develop, and would help me learn how to
-          improve my layouts to reduce parasitics.
+          Now that the DRC and LVS files are complete, I can resume working 
+          on solving the end-of-chapter questions from the textbook and creating
+          layouts for them. With the DRC and LVS checks in place, I can resonably
+          ensure that my layouts are releasitaclly correct and adhere to design rules.
+          This will greatly enhance the learning experience and help me develop real-world
+          skills in circuit design and layout.
         </p>
       </section>
       <p style="text-align: center; margin-top: 30px">
