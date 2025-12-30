@@ -409,6 +409,213 @@ pimp_encl = active.enclosed_by(pimp, 0.26, projection: true)
   "P+ implant overlap over active < 0.26 µm")</code></pre>
         </div>
       <p>2025/12/23</p>
+      <h5>DRC Update</h5>
+      <p>
+        After beginning to work on a layout, I finally had the chance to use the DRC tool,
+        which gave me the chance to find the errors in the DRC code and debug them. Most 
+        of the errors were syntax errors and methods that do not exist in KLayout's DRC language.
+        After fixing those errors, I was able to run the DRC tool successfully on my layouts,
+        which I then used to find and fix the errors in the current layout. One error in the DRC 
+        file that I could not fix was regarding a rule that was intended to check for the minimum spacing
+        between the active region and strips of poly that run parallel to the active region. This rule, however, kept
+        flagging errors at the ends of the poly strips that made up the gate and were perpendicular to 
+        the edge of the active region. As a result, I had to remove that rule from the DRC file. Here is the updated 
+        DRC file that I have been using since fixing the initial errors.
+      </p>
+      
+      <div class="drc-file-container">
+        <pre class="drc-file-content"><code># Updated 0.18µm CMOS Design Rules Check (DRC) File
+# ===============================
+# 0.18 µm CMOS DRC (Ruby, KLayout)
+# Scaffold v0.1 — structure first, rules later
+# ===============================
+
+report("0p18um")
+
+# -------------------------------
+# Layer input definitions
+# -------------------------------
+nwell  = input(1, 0)
+nimp   = input(2, 0)
+pimp   = input(3, 0)
+active = input(4, 0)
+poly   = input(5, 0)
+
+# Metals
+metal1 = input(8, 0)
+metal2 = input(10, 0)
+metal3 = input(12, 0)
+metal4 = input(14, 0)
+metal5 = input(16, 0)
+metal6 = input(18, 0)
+
+# Cuts and vias
+cont_a = input(6, 0)
+cont_p = input(7, 0)
+via1   = input(9, 0)
+via2   = input(11, 0)
+via3   = input(13, 0)
+via4   = input(15, 0)
+via5   = input(17, 0)
+
+# -------------------------------
+# Single-Layer Rules
+# -------------------------------
+
+# === N-Well ===
+nwell.width(1.0).output("NW.W.1", "N-Well width < 1.0 µm")
+nwell.space(1.4).output("NW.S.1", "N-Well spacing < 1.4 µm")
+
+# === N+ Implant ===
+nimp.width(0.48).output("NIMP.W.1", "N+ implant width < 0.48 µm")
+nimp.space(0.48).output("NIMP.S.1", "N+ implant spacing < 0.48 µm")
+nimp.with_area(0.36).output("NIMP.A.1", "N+ implant area < 0.36 µm²")
+
+# === P+ Implant ===
+pimp.width(0.48).output("PIMP.W.1", "P+ implant width < 0.48 µm")
+pimp.space(0.48).output("PIMP.S.1", "P+ implant spacing < 0.48 µm")
+pimp.with_area(0.36).output("PIMP.A.1", "P+ implant area < 0.36 µm²")
+
+# === Active ===
+active.width(0.28).output("active.W.1", "Active width < 0.28 µm")
+active.space(0.32).output("active.S.1", "Active spacing < 0.32 µm")
+
+# === Poly ===
+poly.width(0.18).output("POLY.W.1", "Poly width < 0.18 µm")
+poly.space(0.28).output("POLY.S.1", "Poly spacing < 0.28 µm")
+
+# === Metal 1–4 ===
+[metal1, metal2, metal3, metal4].each_with_index do |m, i|
+  idx = i + 1
+  m.width(0.32).output("M#{idx}.W.1", "Metal#{idx} width < 0.32 µm")
+  m.space(0.32).output("M#{idx}.S.1", "Metal#{idx} spacing < 0.32 µm")
+  m.with_area(0.2).output("M#{idx}.A.1", "Metal#{idx} area < 0.2 µm²")
+end
+
+# === Metal 5–6 ===
+[metal5, metal6].each_with_index do |m, i|
+  idx = i + 5
+  m.width(0.64).output("M#{idx}.W.1", "Metal#{idx} width < 0.64 µm")
+  m.space(0.64).output("M#{idx}.S.1", "Metal#{idx} spacing < 0.64 µm")
+end
+
+# ----------------------------------------
+# CUT TO ACTIVE (cont_a)
+# ----------------------------------------
+
+cont_a.width(0.24).output("CT-A.DIM.1", "Cut-to-active width/height < 0.24 µm")
+cont_a.space(0.32).output("CT-A.S.1", "Cut-to-active spacing < 0.32 µm")
+
+cont_a.enclosed(active, 0.04)
+  .output("CT-A.E.ACT.1", "Cut-to-active not enclosed by Active by ≥ 0.04 µm")
+
+cont_a.enclosed(metal1, 0.02)
+  .output("CT-A.E.M1.1", "Cut-to-active not enclosed by Metal1 by ≥ 0.02 µm")
+
+# ----------------------------------------
+# CUT TO POLY (cont_p)
+# ----------------------------------------
+
+cont_p.width(0.24).output("CT-P.DIM.1", "Cut-to-poly width/height < 0.24 µm")
+cont_p.space(0.32).output("CT-P.S.1", "Cut-to-poly spacing < 0.32 µm")
+
+cont_p.enclosed(poly, 0.04)
+  .output("CT-P.E.POLY.1", "Cut-to-poly not enclosed by Poly by ≥ 0.04 µm")
+
+cont_p.enclosed(metal1, 0.02)
+  .output("CT-P.E.M1.1", "Cut-to-poly not enclosed by Metal1 by ≥ 0.02 µm")
+
+(cont_p & active)
+  .output("CT-P.FORB.ACT.1", "Cut-to-poly is not allowed over Active")
+
+# ----------------------------------------
+# VIA1, VIA2, VIA3
+# ----------------------------------------
+
+[
+  [via1, metal1, metal2, 1],
+  [via2, metal2, metal3, 2],
+  [via3, metal3, metal4, 3]
+].each do |via, lower, upper, idx|
+
+  via.width(0.32).output("V#{idx}.DIM.1", "Via#{idx} width/height < 0.32 µm")
+  via.space(0.32).output("V#{idx}.S.1", "Via#{idx} spacing < 0.32 µm")
+
+  via.enclosed(lower, 0.08)
+    .output("V#{idx}.E.LOW.1", "Via#{idx} not enclosed by lower metal by ≥ 0.08 µm")
+
+  via.enclosed(upper, 0.04)
+    .output("V#{idx}.E.UP.1", "Via#{idx} not enclosed by upper metal by ≥ 0.04 µm")
+end
+
+# ----------------------------------------
+# VIA4
+# ----------------------------------------
+
+via4.width(0.32).output("V4.DIM.1", "Via4 width/height < 0.32 µm")
+via4.space(0.32).output("V4.S.1", "Via4 spacing < 0.32 µm")
+
+via4.enclosed(metal4, 0.16)
+  .output("V4.E.LOW.1", "Via4 not enclosed by Metal4 by ≥ 0.16 µm")
+
+via4.enclosed(metal5, 0.08)
+  .output("V4.E.UP.1", "Via4 not enclosed by Metal5 by ≥ 0.08 µm")
+
+# ----------------------------------------
+# VIA5
+# ----------------------------------------
+
+via5.width(0.6).output("V5.DIM.1", "Via5 width/height < 0.6 µm")
+via5.space(0.6).output("V5.S.1", "Via5 spacing < 0.6 µm")
+
+via5.enclosed(metal5, 0.02)
+  .output("V5.E.LOW.1", "Via5 not enclosed by Metal5 by ≥ 0.02 µm")
+
+via5.enclosed(metal6, 0.02)
+  .output("V5.E.UP.1", "Via5 not enclosed by Metal6 by ≥ 0.02 µm")
+
+# ----------------------------------------
+# ACTIVE REGION RULES
+# ----------------------------------------
+
+gate = active & poly
+
+gate.width(0.18).output("GATE.L.1", "Gate length < 0.18 µm")
+
+active.enclosed(poly, 0.2)
+  .output("GATE.O.1", "Poly overshoot over active < 0.2 µm")
+
+gate.with_area(0.0504).width(0.28)
+    .output("GATE.W.1", "Gate width < 0.28 µm")
+
+poly.separation(nimp, 0.4)
+    .output("POLY.IMP.S.1A", "Poly spacing to N+ implant < 0.4 µm")
+
+poly.separation(pimp, 0.4)
+    .output("POLY.IMP.S.1B", "Poly spacing to P+ implant < 0.4 µm")
+
+gate.separation(active, 0.36)
+  .output("GATE.ACT.S.1", "Gate spacing to active edge < 0.36 µm")
+
+poly.separation(cont_a, 0.14)
+  .output("POLY.CT-A.S.1", "Poly spacing to cut-to-active < 0.14 µm")
+
+active.separation(cont_p, 0.14)
+  .output("ACT.CT-P.S.1", "Active spacing to cut-to-poly < 0.14 µm")
+
+nwell.separation(active, 0.4)
+  .output("NW.ACT.S.1", "Nwell spacing to active < 0.4 µm")
+
+cont_a.separation(nimp | pimp, 0.2)
+  .output("CT-A.IMP.S.1", "Cut-to-active spacing to implant < 0.2 µm")
+
+active.enclosed(nimp, 0.26)
+  .output("NIMP.ACT.E.1", "N+ implant overlap over active < 0.26 µm")
+
+active.enclosed(pimp, 0.26)
+  .output("PIMP.ACT.E.1", "P+ implant overlap over active < 0.26 µm")</code></pre>
+      </div>
+      <p>2025/12/29</p>
       </section>
       <section id="LVS-Development">
         <h3>LVS Development</h3>
