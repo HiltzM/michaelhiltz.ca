@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Current Mirror - Chapter 3, Problem 7</title>
+    <link
+      rel="stylesheet"
+      href="../assets/css/completed_circuits/q_ch3_p7.css"
+    />
+  </head>
+  <body>
+    <header>
+      <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+      <h1>Current Mirror - Chapter 3, Problem 7</h1>
+      <nav id="nav-menu" class="hidden">
+        <ul>
+          <li><a href="../home.html">Home</a></li>
+          <li class="has-submenu">
+            <a href="../projects.html">Projects</a>
+            <ul class="submenu">
+              <li class="has-submenu">
+                <a href="../personal_projects.html">Personal Projects</a>
+                <ul class="submenu">
+                  <li>
+                    <a href="../project_1.html">Circuit Design Project</a>
+                  </li>
+                </ul>
+              </li>
+              <li><a href="../capstone_project.html">Capstone Project</a></li>
+              <li>
+                <a href="../university_projects.html">University Projects</a>
+              </li>
+            </ul>
+          </li>
+          <li><a href="../about.html">About Me</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="floating-back-button">
+      <a
+        href="../project_1.html#completed-circuits"
+        title="Back to Circuit Design Project"
+      >
+        <span>←</span>
+      </a>
+    </div>
+
+    <main>
+      <section id="overview">
+        <h2>Circuit Overview</h2>
+        <p>
+          This page provides a detailed analysis and layout implementation of
+          the current mirror circuit from Chapter 3, Problem 7 of "Analog
+          Integrated Circuit Design" by Carusone, Johns, and Martin. This
+          exercise is to refresh my understanding of fundamental analog circuit
+          design principles, and solving problems using the equations associated
+          with MOSFET operation.
+        </p>
+      </section>
+
+      <section id="problem-statement">
+        <h3>Problem Statement</h3>
+        <p>
+          <strong>Chapter 3, Problem 7:</strong> Using the three-transistor
+          circuit shown in Figure 1, which is to be used as a current source.
+          Using the following parameters, determine the size of the output
+          transistor, Q3, such that the output current is 200µA.
+        </p>
+        <figure class="figure-wrap">
+          <img
+            src="../assets/images/Current Source - Figure 1 - Circuit Schematic.png"
+            alt="Circuit Schematic"
+          />
+          <figcaption>Figure 1: Circuit Schematic</figcaption>
+        </figure>
+        <h4>Parameters</h4>
+        <ul>
+          <li>VDD: 1.8V</li>
+          <li>µ<sub>p</sub>C<sub>ox</sub>: 70 µA/V²</li>
+          <li>µ<sub>n</sub>C<sub>ox</sub>: 270 µA/V²</li>
+          <li>V<sub>th</sub>: ±0.45V</li>
+          <li>λ = 0</li>
+          <li>Q1 (W/L): 4µm / 0.25µm</li>
+          <li>Q2 (W/L): 12µm / 0.25µm</li>
+          <li>Resistor: 5 kΩ</li>
+        </ul>
+      </section>
+
+      <section id="circuit-analysis">
+        <h3>Circuit Analysis</h3>
+        <h4>Kirchhoff's Voltage Law (KVL)</h4>
+        <p>
+          The design process begins with solving for the reference current using
+          KVL around the input loop. Some important definitions and equations
+          are used in the analysis.
+        </p>
+        <figure class="figure-wrap">
+          <img
+            src="../assets/images/Current Source - Figure 2 - KVL.png"
+            alt="Circuit with Labels"
+            class="responsive-image"
+          />
+          <figcaption>Figure 2: Circuit with Voltage Labels</figcaption>
+        </figure>
+        <p>
+          For MOSFETs operating in saturation, since Q1 and Q2 have their gates
+          connected in a diode configuration and λ=0, the drain current is
+          calculated as:
+        </p>
+        <div class="equations">
+          I<sub>D</sub> =
+          <span class="fraction"
+            ><span class="numerator">1</span
+            ><span class="denominator">2</span></span
+          >
+          × µ<sub>n</sub>C<sub>ox</sub> × (W/L) × (V<sub>GS</sub> -
+          V<sub>th</sub>)²
+        </div>
+        <p>
+          For the KVL analysis of the loop we need to rearrange this to solve
+          for V<sub>GS</sub>:
+        </p>
+        <div class="equations">
+          V<sub>GS</sub> = V<sub>thn</sub> + √(<span class="fraction"
+            ><span class="numerator">2 × I<sub>D</sub></span
+            ><span class="denominator"
+              >µ<sub>n</sub>C<sub>ox</sub> × (W/L)</span
+            ></span
+          >) &nbsp;&nbsp;&nbsp; eq.(1)
+        </div>
+        <p>Due to the diode connection:</p>
+        <div class="equations">
+          V<sub>GS1</sub> = V<sub>DS1</sub> = V<sub>2</sub> &nbsp;&nbsp;&nbsp;
+          eq.(2)
+        </div>
+        <div class="equations">
+          V<sub>SG2</sub> = V<sub>SD2</sub> = V<sub>DD</sub> - V<sub>1</sub>
+          &nbsp;&nbsp;&nbsp; eq.(3)
+        </div>
+        <p>The voltage across the resistor is:</p>
+        <div class="equations">
+          V<sub>R</sub> = I<sub>D1</sub> * R &nbsp;&nbsp;&nbsp; eq.(4)
+        </div>
+        <p>Finally, KVL is applied around the input loop:</p>
+        <div class="equations">
+          V<sub>DD</sub> = V<sub>SD2</sub> + V<sub>R</sub> + V<sub>DS1</sub>
+          &nbsp;&nbsp;&nbsp; eq.(5)
+        </div>
+        <p>
+          Substituting eq(1) into eq(2) and eq(3), and subbing eq(4) into eq(5)
+          we can then rearrange eq(5) to solve for I<sub>D1</sub>:
+        </p>
+        <div class="equations">
+          I<sub>D1</sub>R = V<sub>DD</sub> -(V<sub>DD</sub>- (V<sub>DD</sub>-
+          |V<sub>thp</sub>| - √(<span class="fraction"
+            ><span class="numerator">2 × I<sub>D1</sub></span
+            ><span class="denominator"
+              >µ<sub>p</sub>C<sub>ox</sub> × (W/L)<sub>2</sub></span
+            ></span
+          >)))-(V<sub>thn</sub> + √(<span class="fraction"
+            ><span class="numerator">2 × I<sub>D</sub></span
+            ><span class="denominator"
+              >µ<sub>n</sub>C<sub>ox</sub> × (W/L)<sub>1</sub></span
+            ></span
+          >)) &nbsp;&nbsp;&nbsp; eq.(6)
+        </div>
+        <p>
+          Now that we have eq(6) we can solve for I<sub>D1</sub> by rearranging
+          it into a quadratic form and using the quadratic formula, where:
+        </p>
+        <div class="equations">x = √(I<sub>D1</sub>),&nbsp;&nbsp;&nbsp;</div>
+        <p>
+          This results in a reference current of I<sub>D1</sub> = 91.95 µA.
+          Which was confirmed in an LTSpice simulation shown in figure 3.
+        </p>
+        <p>
+          With the reference current known, we can now size Q3 to provide the
+          desired output current of 200 µA. Using the drain current equation for
+          saturation and rearranging to solve for W/L: 26.102µm/0.25µm. Which
+          was also verified in LTSpice as shown in figure 4.
+        </p>
+
+        <div class="figures-container">
+          <figure class="figure-wrap half-width">
+            <img
+              src="../assets/images/Current Source - Figure 3 - LTSpice Simulation.png"
+              alt="LTSpice Simulation Results"
+              class="responsive-image"
+            />
+            <figcaption>Figure 3: LTSpice Simulation Results</figcaption>
+          </figure>
+          <figure class="figure-wrap half-width">
+            <img
+              src="../assets/images/Current Source - Figure 4 - Q3 Sizing Simulation.png"
+              alt="Q3 Sizing Simulation Results"
+              class="responsive-image"
+            />
+            <figcaption>Figure 4: Q3 Sizing Simulation Results</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="layout-implementation">
+        <h3>KLayout Implementation</h3>
+
+        <p>
+          The first step in the layout process was to decide on a floorplan for
+          the layout. The devices were arranged for the best possible matching.
+          The PMOS transistors are placed together at the top of the layout to
+          create easy access to the power supply, as well as to make sure the
+          shared gate connection was short and easy to wire. The NMOS transistor
+          was placed at the bottom of the layout to allow for easy access to
+          ground. The resistor section was placed in between transistors Q1 and
+          Q2 to minimize routing complexity. As this is just a current source I
+          elected to leave the connection points, V<sub>DD</sub>, GND, and Out
+          as metal2 layers instead of adding pads for them. The full layout is
+          shown in figure 5.
+        </p>
+
+        <div class="figures-container">
+          <figure class="figure-wrap large-figure">
+            <img
+              src="../assets/images/Current Source - Figure 5 - Full Layout.png"
+              alt="Current Mirror Layout"
+              class="responsive-image"
+            />
+            <figcaption>Figure 5: Full Layout</figcaption>
+          </figure>
+
+          <figure class="figure-wrap small-figure">
+            <img
+              src="../assets/images/Current Source - Figure 6 - Layers Legend.png"
+              alt="Layout Legend"
+              class="responsive-image"
+            />
+            <figcaption>Figure 6: Layout Legend</figcaption>
+          </figure>
+        </div>
+        <h4>PMOS Layout</h4>
+
+        <p>
+          This was the first section of the layout I decided to tackle, as I
+          found working from the top of the circuit downwards to be the most
+          intuitive. To make the layout more compact and to improve matching of
+          the transistors. I oriented both PMOS devices in the vertical
+          direction. Then placed them closely so that they could share a common
+          power source. Using the same width for the active region also made it
+          easier to line up the gates for a common connection.
+        </p>
+        <figure class="figure-wrap centered">
+          <img
+            src="../assets/images/Current Source - Figure 7 - PMOS Current Mirror.png"
+            alt="PMOS Layout Section"
+            class="responsive-image"
+          />
+          <figcaption>Figure 7: PMOS Layout Section</figcaption>
+        </figure>
+
+        <h4>Reference PMOS</h4>
+        <figure class="figure-wrap-small">
+          <img
+            src="../assets/images/Current Source - Figure 8 - PMOS1 Layout.png"
+            alt="PMOS1 Layout"
+            class="responsive-image"
+          />
+          <figcaption>Figure 8: PMOS1 (Q2) Layout</figcaption>
+        </figure>
+        <p>
+          This is the first device I worked on for this layout. I started with
+          drawing out a rectangular active region and then adding the p+
+          diffusion region. It is important that I assumed that in this process
+          the polysilicon layer would be created before the p+ implantation step,
+          and therefore could be used as a natural mask, separating the
+          diffusion regions of both the gate and the source. After defining the
+          active and implantation regions, I moved on to designing the gate
+          poly. I designed the gates of each finger to be separated to reduce
+          the antenna effect during fabrication. To reduce the size of the
+          device I also designed the gate to be connected directly to the metal1
+          layer of the drain of Q2. To prevent any issues with the gate due to the 
+          antenna effect I added a Net Area Check (NAC) diode to the drain
+          connection. Finally, when I worked on the source, I made sure to add 
+          well contacts around the N-well region to help with isolation. Even 
+          though this is not necessary for a simple current mirror, I feel that 
+          it is a good practice to get into as I pursue an analog design career. 
+          The full layout of PMOS1 (Q2) is shown in figure 8. There were a few 
+          things I would change about this layout if I were to do it again, 
+          the biggest is to make sure that all dimensions are exact multiples of 
+          the grid size. As I found it hard to line up some of the layers due to
+          snapping issues. The most significant cause of these issues was the gate 
+          length. So in future projects, I will make sure to adjust the gate
+          length given in the practice problem to a multiple of the grid size. 
+          As it makes the layout process much easier. I noticed this problem while
+          working on the layout of PMOS2. So there I began making these kinds of 
+          adjustments to make the layout process smoother, and actually producible.
+        </p>
+
+        <h4>Output PMOS</h4>
+        <p>
+          For the layout of PMOS2 (Q3) I followed a similar process to the reference
+          PMOS. However, due to the calculated width of 26.102µm, I couldn't easily
+          make the width a multiple of 4µm like I did for PMOS1. So instead, I made 
+          6 fingers that had a width of 4µm and then added a 7th finger with a width
+          of 2.1µm. This maintains the effective gate area of the transistor while
+          reducing the size of the layout. The only other change I made was to add a
+          strip of metal1 to connect all of the gates. This made it easier to route 
+          the gate connection to PMOS1. As well as it gave me a place to add a NAC diode.
+          The full layout of PMOS2 (Q3) is shown in figure 9. Again, I made sure to add 
+          well contacts around the N-well region to help with isolation. Another thing
+          I did in this design was to make sure that the source of PMOS2 and PMOS1
+          were aligned, so that the wiring of the devices would be easier. The drain of
+          PMOS2 can simply be connected to a metal2 layer and be routed out of the layout.
+        </p>
+        <figure class="figure-centered">
+          <img
+            src="../assets/images/Current Source - Figure 9 - PMOS2 Layout.png"
+            alt="PMOS2 Layout"
+            class="responsive-image"
+          />
+          <figcaption>Figure 9: PMOS2 (Q3) Layout</figcaption>
+        </figure>
+        <h4>Design Notes</h4>
+        <p>
+          While working on these designs one major consideration I have yet to mention
+          is the ability of the materials to handle current. One of the major sources I
+          have been using for this project is the book "IC Mask Design" by Christopher
+          and Judy Saint. In this book, they give a lot of useful design rules and 
+          "rules of thumb" for designing circuits. (As I look for the current rule of 
+          thumb, I realize I should remake the resistors. As in the book they state that for 
+          resistors, the rule of thumb is the minimum width is 5µm, and minimum length 
+          is 10µm. So in the future I will scale this for the size of the process I am using,
+          The book is 20+ years old after all.) The rule of thumb for current density is; 
+          "A 1µm wide wire can handle 1mA of current" Using this for a 200µA current, 
+          and a minimum width of 0.32µm for metal1 means that the minimum width of the 
+          metal1 is more than enough to handle the currents in this circuit. 
+        </p>
+        <h4>Resistor Layout</h4>
+        <figure class="figure-wrap">
+          <img
+            src="../assets/images/Current Source - Figure 10 - Resistor Layout.png"
+            alt="Resistor Layout"
+            class="responsive-image"
+          />
+          <figcaption>Figure 10: Resistor Layout Section</figcaption> 
+        </figure>
+        <p>
+          The resistor layout should have been the most straightforward part of the layout,
+          but it involved the most guess work of the design. As I could not find any specific 
+          information about the sheet resistance of the poly layer. So I had to make some
+          assumptions. Using Christopher and Judy Saint's other book "IC Layout Basics" I 
+          guessed that the sheet resistance of a doped polysilicon layer would be around
+          250 Ω/sq. Using this value and the knowledge that I wanted to break the 5kΩ
+          resistor into multiple segments to reduce the total space of the resistor.
+          using the 2nd equation for resistance taken from page 171 of the book IC Layout 
+          Basics, I calculated the total length of each segment to be 2.88µm for a resistor 
+          width of 0.7µm. This resulted in a total of 1.25kΩ per segment. Using 4 segments
+          connected in series would give me the desired 5kΩ resistance. I added 2 dummy segments
+          on each side of the resistor segments to help with the matching of the resistor segments
+          as the outer segments of a layer tend to etch slightly differently than the inner segments.
+          The full layout of the resistor section is shown in figure 10. The segment is
+          not connected on the bottom side is where the drain of Q1 connects to the resistor.
+          I found it easier to just leave that part open at this stage of the layout, and then 
+          design the connection when I worked on the NMOS layout.
+        </p>
+        <h4>NMOS Layout</h4>
+        <figure class="figure-wrap">
+          <img
+            src="../assets/images/Current Source - Figure 11 - NMOS Layout.png"
+            alt="NMOS Layout Section"
+            class="responsive-image"
+          />
+          <figcaption>Figure 11: NMOS Layout Section</figcaption>
+        </figure>
+        <p>
+          This device didn't need much design effort as it is the smallest device
+          in the layout. But I did elect to use multiple fingers for this device, in the 
+          attempt to improve matching by keeping the device in a vertical orientation like
+          the PMOS devices. Instead of orienting it horizontally, which would be better for 
+          connecting the current to ground. But due the small amount of current in the circuit
+          I figured that the prioritizing matching was more important than current density.
+          But I did use 2 fingers to reduce the overall height of the circuit. The layout of
+          the NMOS device is shown in figure 11. Finally to really help with isolating the 
+          circuit from substrate noise I added substrate ties all around the circuit and 
+          connected them to the ground of the NMOS device. Shown in figure 12.
+        </p>
+        <figure>
+          <img
+            src="../assets/images/Current Source - Figure 12 - Substrate Ties.png"
+            alt="Substrate Ties Layout"
+            class="responsive-image"
+          />
+          <figcaption>Figure 12: NMOS with Substrate Ties</figcaption>
+        </figure>
+        <h4>Final Connections</h4>
+        <p>
+          Finally to connect everything together I used metal2 layers to route the power supplies
+          and the output, as well as any connections required between devices. To see the complete 
+          layout please refer back to figure 5.
+        </p>
+        <h4>Design Rule Verification</h4>
+        <p>
+          This layout gave me the chance to both practice designing a layout while interacting
+          with a DRC tool and to debug my DRC script. After debugging my DRC script 
+          my design has passed the rule check. shown in figure 13.
+        </p>
+        <figure class="figure-wrap centered">
+          <img
+            src="../assets/images/Current Source - Figure 13 - DRC Check.png"
+            alt="DRC Clean Results"
+            class="responsive-image"
+          />
+          <figcaption>Figure 13: Clean DRC Results (No Violations)</figcaption>
+        </figure>
+      </section>
+     
+
+      <p style="text-align: center; margin-top: 30px">
+        <a href="../project_1.html#completed-circuits"
+          >← Back to Completed Circuits</a
+        >
+        |
+        <a href="#top">↑ Back to Top</a>
+      </p>
+    </main>
+    <footer>
+      <p>&copy; 2025 Michael Hiltz</p>
+    </footer>
+    <script src="../assets/js/scripts.js"></script>
+  </body>
+</html>
