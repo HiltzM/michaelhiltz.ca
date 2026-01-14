@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Year Four Projects</title>
-    <link rel="stylesheet" href="/assets/css/year_four.css">
-</head>
-<body>
+    <link rel="stylesheet" href="assets/css/year_four.css" />
+  </head>
+  <body>
     <header>
       <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
       <h1>Year Four Projects</h1>
       <nav id="nav-menu" class="hidden">
         <ul>
           <li><a href="index.html">Home</a></li>
-            <li class="has-submenu">
-              <a href="projects.html">Projects</a>
-              <ul class="submenu">
-                <li><a href="personal_projects.html">Personal Projects</a></li>
-                <li><a href="capstone_project.html">Capstone Project</a></li>
-                <li><a href="university_projects.html">University Projects</a></li>
-              </ul>
-            </li>
+          <li class="has-submenu">
+            <a href="projects.html">Projects</a>
+            <ul class="submenu">
+              <li><a href="personal_projects.html">Personal Projects</a></li>
+              <li><a href="capstone_project.html">Capstone Project</a></li>
+              <li>
+                <a href="university_projects.html">University Projects</a>
+              </li>
+            </ul>
+          </li>
           <li><a href="about.html">About Me</a></li>
         </ul>
       </nav>
@@ -54,10 +56,7 @@
         </p>
         <figure>
           <div class="image-container">
-            <img
-              src="/assets/images/Full Bridge.png"
-              alt="Figure 1"
-            />
+            <img src="/assets/images/Full Bridge.png" alt="Figure 1" />
           </div>
           <figcaption>Figure 1: Tsang Suspension Bridge</figcaption>
         </figure>
@@ -67,7 +66,7 @@
           platform is suspended from the Tsang suspensions using springs that
           act in a similar manner to the springs at the base of the Tsang
           suspensions. From there we sputtered a layer of gold on top of the
-          bridge after fabrication. This thin gold layer provides a conductive 
+          bridge after fabrication. This thin gold layer provides a conductive
           path that we then ran a current through, treating the springs
           supporting the structure as a resistor and thermal element. On the
           microscopic scale, the gold layer heats up in seconds. This heat is
@@ -106,16 +105,24 @@
         </p>
         <h4>Project Reflection</h4>
         <p>
-          Overall, this project provided valuable hands-on experience in the design and fabrication of MEMS devices, and I thoroughly enjoyed 
-          working through the complex challenges of micro-scale engineering. It reinforced the importance of considering both mechanical and 
-          electrical aspects in the design process, as well as the need for iterative testing and refinement. Beyond the engineering design aspects, 
-          I found learning about the photolithographic design and manufacturing processes particularly fascinating, as it provided deep 
-          insight into how modern microelectronic and MEMS devices are fabricated at the micro and nanoscale levels. The challenges faced during fabrication 
-          highlighted the complexities involved in working with micro-scale structures, and the need for precise control over material properties 
-          and dimensions. The experience of seeing our designs come to life through the fabrication process was both educational and rewarding,
-          bridging the gap between theoretical knowledge and practical implementation in microfabrication technology.
+          Overall, this project provided valuable hands-on experience in the
+          design and fabrication of MEMS devices, and I thoroughly enjoyed
+          working through the complex challenges of micro-scale engineering. It
+          reinforced the importance of considering both mechanical and
+          electrical aspects in the design process, as well as the need for
+          iterative testing and refinement. Beyond the engineering design
+          aspects, I found learning about the photolithographic design and
+          manufacturing processes particularly fascinating, as it provided deep
+          insight into how modern microelectronic and MEMS devices are
+          fabricated at the micro and nanoscale levels. The challenges faced
+          during fabrication highlighted the complexities involved in working
+          with micro-scale structures, and the need for precise control over
+          material properties and dimensions. The experience of seeing our
+          designs come to life through the fabrication process was both
+          educational and rewarding, bridging the gap between theoretical
+          knowledge and practical implementation in microfabrication technology.
         </p>
-        <p style="text-align: center; margin-top: 30px;">
+        <p style="text-align: center; margin-top: 30px">
           <a href="#top">↑ Back to Top</a>
         </p>
       </section>
@@ -123,113 +130,185 @@
         <h3>PPG Sensor</h3>
         <h4>Project Overview</h4>
         <p>
-           The purpose of this project was to implement and apply the principles of 
-           the UBC course ENGR 451 Microelectronics 2. This project involved the amplification
-           filtering, conditioning, and digitization of a PPG (Photoplethysmogram) signal.
-           The PPG signal is a non-invasive method of measuring blood volume changes in the microvascular
-           bed of tissue, and is commonly used in medical applications to monitor heart rate and blood oxygen levels.
-           This project was also the focus of the course labs. With each lab focusing on a different aspect of the PPG sensor design.
-           The first lab focused on lab safety and the use of the lab equipment such as the oscilloscope and power supply.
-           So I won't go into detail about that lab.
+          The purpose of this project was to implement and apply the principles
+          of the UBC course ENGR 451 Microelectronics 2. This project involved
+          the amplification filtering, conditioning, and digitization of a PPG
+          (Photoplethysmogram) signal. The PPG signal is a non-invasive method
+          of measuring blood volume changes in the microvascular bed of tissue,
+          and is commonly used in medical applications to monitor heart rate and
+          blood oxygen levels. This project was also the focus of the course
+          labs. With each lab focusing on a different aspect of the PPG sensor
+          design. The first lab focused on lab safety and the use of the lab
+          equipment such as the oscilloscope and power supply. So I won't go
+          into detail about that lab.
         </p>
         <h4>Lab 2: Amplification</h4>
         <p>
           This is the part of the project where the design work really started.
-          To start this portion of the project, we began by creating an infrared optical sensor assembly.
-          A 940 nm infrared LED was used as the light source, and a photodiode was used to detect the light.
-          The LED and photodiode were soldered onto a breadboard to create the assembly, with wires connecting the 
-          components to the power supply and the rest of the circuit. The LED was driven by a 5V power supply with an 82 Ohm resistor in series to limit the current.
-          The photodiode was connected to an operational amplifier (op-amp) in a transimpedance configuration to convert the current generated by the photodiode into a voltage signal.
-          The op-amp model used in this project was the MCP601, shown in Figure 1 as U1. The photodiode is shown in Figure 1 as the current source D1.
-          The resistor used in the transimpedance configuration was a potentiometer that was tuned to around 4 Mohms to provide a tunable gain for the best performance.
-          Figure 2 shows the initial output for the transimpedance amplifier circuit.
+          To start this portion of the project, we began by creating an infrared
+          optical sensor assembly. A 940 nm infrared LED was used as the light
+          source, and a photodiode was used to detect the light. The LED and
+          photodiode were soldered onto a breadboard to create the assembly,
+          with wires connecting the components to the power supply and the rest
+          of the circuit. The LED was driven by a 5V power supply with an 82 Ohm
+          resistor in series to limit the current. The photodiode was connected
+          to an operational amplifier (op-amp) in a transimpedance configuration
+          to convert the current generated by the photodiode into a voltage
+          signal. The op-amp model used in this project was the MCP601, shown in
+          Figure 1 as U1. The photodiode is shown in Figure 1 as the current
+          source D1. The resistor used in the transimpedance configuration was a
+          potentiometer that was tuned to around 4 Mohms to provide a tunable
+          gain for the best performance. Figure 2 shows the initial output for
+          the transimpedance amplifier circuit.
           <figure>
-            <img src="/assets/images/PPG - Figure 1.png" alt="Transimpedance Amplifier Circuit Diagram"/>
-            <figcaption>Figure 1: Transimpedance Amplifier Circuit Diagram</figcaption>
+            <img
+              src="/assets/images/PPG - Figure 1.png"
+              alt="Transimpedance Amplifier Circuit Diagram"
+            />
+            <figcaption>
+              Figure 1: Transimpedance Amplifier Circuit Diagram
+            </figcaption>
           </figure>
           <figure id="PPG_figure-2">
-            <img src="assets/images/PPG - Figure 2 - Amplification Output.jpg" alt="Transimpedance Amplifier Output" class="reduced-size-1" />
+            <img
+              src="assets/images/PPG - Figure 2 - Amplification Output.jpg"
+              alt="Transimpedance Amplifier Output"
+              class="reduced-size-1"
+            />
             <figcaption>Figure 2: Transimpedance Amplifier Output</figcaption>
+          </figure>
         </p>
         <h4>Lab 3: Signal Conditioning</h4>
         <p>
-          The next step in the project was to condition the signal from the transimpedance amplifier.
-          This was done by using a bandpass filter to remove noise from the signal. The bandpass filter was implemented
-          by adjusting the capacitor in the transimpedance amplifier circuit to create a low-pass filter, and then adding a high-pass filter
-          after the amplifier output. The high-pass filter was created using a series capacitor and resistor to block DC and low-frequency noise,
-          while allowing the desired PPG signal to pass. The resulting signal was much cleaner and more representative of the actual physiological signal.
-          Figure 3 shows the schematic combination of the low-pass and high-pass filters, with all of the component values,
-          while Figure 4 shows the output after signal conditioning.
+          The next step in the project was to condition the signal from the
+          transimpedance amplifier. This was done by using a bandpass filter to
+          remove noise from the signal. The bandpass filter was implemented by
+          adjusting the capacitor in the transimpedance amplifier circuit to
+          create a low-pass filter, and then adding a high-pass filter after the
+          amplifier output. The high-pass filter was created using a series
+          capacitor and resistor to block DC and low-frequency noise, while
+          allowing the desired PPG signal to pass. The resulting signal was much
+          cleaner and more representative of the actual physiological signal.
+          Figure 3 shows the schematic combination of the low-pass and high-pass
+          filters, with all of the component values, while Figure 4 shows the
+          output after signal conditioning.
           <figure id="PPG_figure-3">
-            <img src="/assets/images/PPG - Figure 3 - Signal Conditioning.png" alt="Signal Conditioning Circuit Diagram" />
-            <figcaption>Figure 3: Signal Conditioning Circuit Diagram</figcaption>
+            <img
+              src="/assets/images/PPG - Figure 3 - Signal Conditioning.png"
+              alt="Signal Conditioning Circuit Diagram"
+            />
+            <figcaption>
+              Figure 3: Signal Conditioning Circuit Diagram
+            </figcaption>
           </figure>
 
           <figure>
-            <img src="/assets/images/PPG - Figure 4 - Conditioned Output.png" alt="Signal Conditioned Output" class="reduced-size-1" />
+            <img
+              src="/assets/images/PPG - Figure 4 - Conditioned Output.png"
+              alt="Signal Conditioned Output"
+              class="reduced-size-1"
+            />
             <figcaption>Figure 4: Signal Conditioned Output</figcaption>
           </figure>
         </p>
         <h4>Lab 4: Comparator Design</h4>
         <p>
-          The second last step in the project was to convert the conditioned analog signal into a digital switching signal.
-          This was accomplished by implementing a comparator circuit that could reliably trigger on each heartbeat.
-          The comparator was designed using an operational amplifier with positive feedback to create hysteresis,
-          which prevents false triggering due to noise in the input signal. The circuit compares the conditioned PPG signal
-          against a 2.5V reference voltage and switches between high and low output states based on two trip points.
-          The hysteresis band was carefully calculated to ensure reliable switching while avoiding false triggers from
-          the dicrotic notch that appears in PPG signals during cardiac cycles. Figure 5 shows the comparator circuit
-          schematic with component values, while Figure 6 shows the final digital output signal. The output signal will be used in the next
-          lab to drive an LED to indicate each heartbeat.
+          The second last step in the project was to convert the conditioned
+          analog signal into a digital switching signal. This was accomplished
+          by implementing a comparator circuit that could reliably trigger on
+          each heartbeat. The comparator was designed using an operational
+          amplifier with positive feedback to create hysteresis, which prevents
+          false triggering due to noise in the input signal. The circuit
+          compares the conditioned PPG signal against a 2.5V reference voltage
+          and switches between high and low output states based on two trip
+          points. The hysteresis band was carefully calculated to ensure
+          reliable switching while avoiding false triggers from the dicrotic
+          notch that appears in PPG signals during cardiac cycles. Figure 5
+          shows the comparator circuit schematic with component values, while
+          Figure 6 shows the final digital output signal. The output signal will
+          be used in the next lab to drive an LED to indicate each heartbeat.
           <figure id="PPG_figure-5">
-            <img src="/assets/images/PPG - Figure 5 - Comparator Circuit.png" alt="Comparator Circuit Diagram" />
+            <img
+              src="/assets/images/PPG - Figure 5 - Comparator Circuit.png"
+              alt="Comparator Circuit Diagram"
+            />
             <figcaption>Figure 5: Comparator Circuit Diagram</figcaption>
           </figure>
 
           <figure>
-            <img src="/assets/images/PPG - Figure 6 - Digital Output.png" alt="Comparator Digital Output" class="reduced-size-1" />
+            <img
+              src="/assets/images/PPG - Figure 6 - Digital Output.png"
+              alt="Comparator Digital Output"
+              class="reduced-size-1"
+            />
             <figcaption>Figure 6: Comparator Digital Output</figcaption>
           </figure>
         </p>
         <h4>Lab 5: Monostable Multivibrator Circuits</h4>
         <p>
-          The final step in the project was to create a pulse detection circuit that would flash an LED each time a heartbeat was detected.
-          This was accomplished by implementing a three-stage circuit consisting of an edge detector, a monostable multivibrator, and an LED driver.
-          The edge detection stage used a differentiator circuit with a coupling capacitor and input resistor to generate short pulses on the rising edges of the comparator output,
-          shown in Figure 8. A diode was added to isolate only the positive-going pulses, ensuring the monostable circuit would trigger only on heartbeats.
-          The monostable multivibrator was built using two bipolar transistors configured as a one-shot pulse generator, with the pulse duration determined by an RC time constant.
-          For a maximum heart rate of 180 beats per minute, the LED flash duration was designed to be approximately 200ms to provide clear visual indication.
-          Figure 7 shows the complete pulse detection circuit schematic. The final output successfully drives an LED to flash in sync with each detected heartbeat,
-          providing a simple and effective visual indicator of the PPG signal. Lastly Figure 9 shows the completed circuit built on a breadboard.
+          The final step in the project was to create a pulse detection circuit
+          that would flash an LED each time a heartbeat was detected. This was
+          accomplished by implementing a three-stage circuit consisting of an
+          edge detector, a monostable multivibrator, and an LED driver. The edge
+          detection stage used a differentiator circuit with a coupling
+          capacitor and input resistor to generate short pulses on the rising
+          edges of the comparator output, shown in Figure 8. A diode was added
+          to isolate only the positive-going pulses, ensuring the monostable
+          circuit would trigger only on heartbeats. The monostable multivibrator
+          was built using two bipolar transistors configured as a one-shot pulse
+          generator, with the pulse duration determined by an RC time constant.
+          For a maximum heart rate of 180 beats per minute, the LED flash
+          duration was designed to be approximately 200ms to provide clear
+          visual indication. Figure 7 shows the complete pulse detection circuit
+          schematic. The final output successfully drives an LED to flash in
+          sync with each detected heartbeat, providing a simple and effective
+          visual indicator of the PPG signal. Lastly Figure 9 shows the
+          completed circuit built on a breadboard.
           <figure id="PPG_figure-7">
-            <img src="/assets/images/PPG - Figure 7 - Complete Circuit Diagram.png" alt="Complete Circuit Diagram" />
+            <img
+              src="/assets/images/PPG - Figure 7 - Complete Circuit Diagram.png"
+              alt="Complete Circuit Diagram"
+            />
             <figcaption>Figure 7: Complete Circuit Diagram</figcaption>
           </figure>
 
           <figure>
-            <img src="/assets/images/PPG - Figure 8 - Differentiator Input vs Output.PNG" alt="Differentiator Input vs Output" class="reduced-size-1" />
+            <img
+              src="/assets/images/PPG - Figure 8 - Differentiator Input vs Output.PNG"
+              alt="Differentiator Input vs Output"
+              class="reduced-size-1"
+            />
             <figcaption>Figure 8: Edge Detector Input vs Output</figcaption>
           </figure>
           <figure id="PPG_figure-9">
-            <img src="/assets/images/PPG - Figure 9 - Breadboard Circuit.PNG" alt="Breadboard Circuit" class="reduced-size-1" />
+            <img
+              src="/assets/images/PPG - Figure 9 - Breadboard Circuit.PNG"
+              alt="Breadboard Circuit"
+              class="reduced-size-1"
+            />
             <figcaption>Figure 9: Breadboard Circuit</figcaption>
           </figure>
         </p>
         <h4>Reflection</h4>
         <p>
-          This project provided valuable hands-on experience with analog circuit design and signal processing. 
-          By developing the circuit section by section, I gained a deeper understanding of how each type of circuit - amplification, 
-          filtering, comparison, and pulse generation - can be used to manipulate a signal to achieve specific goals. Working through the 
-          various stages of the PPG circuit helped me understand the principles behind each component and how they interact with the 
-          signal as it propagates through the system. The iterative process of testing and refining each section also highlighted the importance 
-          of troubleshooting and problem-solving skills in electronics, while demonstrating how different circuit topologies can be 
-          combined to create a complete functional system.
+          This project provided valuable hands-on experience with analog circuit
+          design and signal processing. By developing the circuit section by
+          section, I gained a deeper understanding of how each type of circuit -
+          amplification, filtering, comparison, and pulse generation - can be
+          used to manipulate a signal to achieve specific goals. Working through
+          the various stages of the PPG circuit helped me understand the
+          principles behind each component and how they interact with the signal
+          as it propagates through the system. The iterative process of testing
+          and refining each section also highlighted the importance of
+          troubleshooting and problem-solving skills in electronics, while
+          demonstrating how different circuit topologies can be combined to
+          create a complete functional system.
         </p>
-        <p style="text-align: center; margin-top: 30px;">
+        <p style="text-align: center; margin-top: 30px">
           <a href="#top">↑ Back to Top</a>
         </p>
       </section>
-      
+
       <!--
       </section>
       <section id="project-3">
@@ -237,11 +316,11 @@
         <p>
           Add details about Project 3 here
         </p>
-      </section> --> 
+      </section> -->
     </main>
     <footer>
-      <p>&copy; 2025 Michael Hiltz</p>
+      <p>&copy; 2026 Michael Hiltz</p>
     </footer>
-    <script src="/assets/js/scripts.js"></script>
+    <script src="assets/js/scripts.js"></script>
   </body>
 </html>
