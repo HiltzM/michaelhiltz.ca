@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 3, Problem 10</title>
+    <link
+      rel="stylesheet"
+      href="../../assets/css/completed_circuits/chapter_3/q_ch3_p10.css"
+    />
+  </head>
+  <body>
+    <header>
+      <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+      <h1>Chapter 3, Problem 10</h1>
+      <nav id="nav-menu" class="hidden">
+        <ul>
+          <li><a href="../../index.html">Home</a></li>
+          <li class="has-submenu">
+            <a href="../../projects.html">Projects</a>
+            <ul class="submenu">
+              <li class="has-submenu">
+                <a href="../../personal_projects.html">Personal Projects</a>
+                <ul class="submenu">
+                  <li>
+                    <a href="../../project_1.html">Circuit Design Project</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="../../capstone_project.html">Capstone Project</a>
+              </li>
+              <li>
+                <a href="../../university_projects.html">University Projects</a>
+              </li>
+            </ul>
+          </li>
+          <li><a href="../../about.html">About Me</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="floating-back-button">
+      <a
+        href="../../project_1.html#completed-circuits"
+        title="Back to Circuit Design Project"
+      >
+        <span>←</span>
+      </a>
+    </div>
+
+    <main>
+      <section id="overview">
+        <h2>Circuit Overview</h2>
+        <p>
+          This page provides a detailed analysis and layout implementation of a
+          circuit from Chapter 3, Problem 10 of "Analog Integrated Circuit
+          Design" by Carusone, Johns, and Martin. This exercise is part of my
+          ongoing project to deepen my understanding of analog circuit design
+          principles and practice with industry-standard design tools.
+        </p>
+      </section>
+
+      <section id="problem-statement">
+        <h3>Problem Statement</h3>
+        <p>
+          <strong>Chapter 3, Problem 10:</strong> Design a common-source
+          amplifier with active load using the 0.18µm device parameters provided
+          in the textbook. Assume a supply voltage of 1.8V, and that the
+          amplifier only consumes 1mW of power. The gain of the amplifier should
+          be at least 5[V/V]. Make sure that each transistor has V<sub>eff</sub>
+          = 0.25V and that the gate length is L = 0.26µm.
+        </p>
+        <h4>Design Parameters</h4>
+        <p>The requirements of the design are summarized as follows:</p>
+        <ul>
+          <li>Amplifier style - Common-Source</li>
+          <li>Supply Voltage (V<sub>DD</sub>) = 1.8V</li>
+          <li>Power Consumption = 1mW</li>
+          <li>Minimum Gain (A<sub>v</sub>) = -5 V/V</li>
+          <li>Transistor Effective Voltage (V<sub>eff</sub>) = 0.25V</li>
+          <li>Transistor Gate Length (L) = 0.26µm</li>
+        </ul>
+        <h4>0.18µm Technology Parameters</h4>
+        <p>
+          These are the values provided by the textbook for the 0.18µm process
+          technology.
+        </p>
+        <ul>
+          <li>µ<sub>n</sub>C<sub>ox</sub> = 270 µA/V²</li>
+          <li>µ<sub>p</sub>C<sub>ox</sub> = 70 µA/V²</li>
+          <li>V<sub>tn</sub> = 0.45V</li>
+          <li>V<sub>tp</sub> = -0.45V</li>
+          <li>λ*L = 0.08 µm/V</li>
+        </ul>
+      </section>
+
+      <section id="circuit-analysis">
+        <h3>Circuit Analysis</h3>
+        <h4>Analysis Approach</h4>
+        <p>
+          The first step in designing this amplifier is to determine what the
+          current through the circuit needs to be. Given the power consumption
+          requirement of 1mW and the supply voltage of 1.8V we can calculate the
+          current as follows:
+        </p>
+        <div class="equations">
+          <p>P = V × I ⟹ I = P / V</p>
+        </div>
+        <p>
+          Where I is the total current drawn from the supply. Since there will
+          be 2 branches in the circuit that will draw the same magnitude of
+          current we can use the formula:
+        </p>
+        <div class="equations">
+          <p>I = P / 2V</p>
+        </div>
+        <p>Plugging in the values we get: I = 278µA.</p>
+        <h4>NMOS Transistor Design</h4>
+        <p>
+          Next, we can use the current to determine the small signal resistance
+          of the transistors on the amplifying side of the circuit. The small
+          signal resistance, r<sub>ds</sub>, is given by:
+        </p>
+        <div class="equations">
+          <p>r<sub>ds</sub> = 1 / λI<sub>D</sub> = L / (λ*L * I<sub>D</sub>)</p>
+        </div>
+        <p>
+          Plugging in the values we get: r<sub>dsn</sub> = r<sub>dsp</sub> =
+          11.69kΩ. From here we can use the formula for gain in a common-source
+          amplifier with an active load to use the transconductance,
+          g<sub>m</sub>, to determine the minimum gate width of the NMOS
+          transistor. The gain is given by:
+        </p>
+        <div class="equations">
+          <p>
+            A<sub>v</sub> = -g<sub>m</sub> × (r<sub>dsn</sub> ||
+            r<sub>dsp</sub>) = -g<sub>m</sub> × (r<sub>dsn</sub>/2)
+          </p>
+        </div>
+        <p>
+          Rearranging for g<sub>m</sub> we get: g<sub>m<sub>min</sub></sub> =
+          854.7µA/V. Utilizing the formula for transconductance in the
+          saturation region, we can solve for the minimum gate width,
+          W<sub>min</sub>: 1.26µm. However, to ensure that the design meets the
+          required V<sub>eff</sub> of 0.25V, we will solve the equation for
+          I<sub>ds</sub> to find the required gate width. As long as this
+          calculated width is larger than W<sub>min</sub>, we will be able to
+          meet both requirements. With I<sub>ds</sub> set to 278µA and V<sub
+            >eff</sub
+          >
+          set to 0.25V, we find that W = 8.56µm, which results in a voltage gain
+          of approximately -13 V/V, which satisfies our gain requirement.
+          Finally, for the design of the NMOS to be complete, I should mention
+          that the input voltage applied to the NMOS gate must have a DC offset
+          of at least V<sub>tn</sub> + V<sub>eff</sub> = 0.7V to ensure that the
+          transistor is operating in saturation, and that the input signal is
+          being amplified.
+        </p>
+        <h4>PMOS Transistor Design</h4>
+        <p>
+          The design of the PMOS transistors is fairly straightforward since the
+          current through both PMOS is the same, and the effective voltage
+          requirement is predetermined, we can directly solve for the gate
+          width. Using the same formula for I<sub>ds</sub>
+          as before, we find that W = 33.04µm. Finally, to make sure that the
+          transistors in the current mirror are operating in saturation, I added
+          a resistor in series with the biasing PMOS transistor. The resistor
+          value is determined by using the effective voltage, the power supply
+          voltage, and the threshold voltage to find the voltage drop across the
+          PMOS transistor while it is in saturation. From there, the resistor
+          value is found by dividing the PMOS drain voltage by the current
+          through the branch. Which results in a calculated resistor value of
+          3.96kΩ. After performing a simulation of the circuit in LTSpice I
+          found that a resistor value of 3.98kΩ resulted in the desired
+          operating point.
+        </p>
+        <h4>Final Circuit Design</h4>
+        <p>The final circuit design is shown in figure 1 below.</p>
+        <div class="figures-container centered">
+          <figure class="large-figure">
+            <img
+              src="../../assets/images/Chapter 3/Common-Source Amp/Common-Source Amp - Figure 1 - Circuit Schematic.png"
+              alt="Final Circuit Design"
+            />
+            <figcaption>Figure 1: Final Circuit Design</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="layout-implementation">
+        <h3>KLayout Implementation</h3>
+
+        <p>
+          For this layout implementation, I decided to not just make a layout of
+          the circuit schematic. Instead, I decided to go beyond that and create
+          a layout that includes 4 instances of the common-source amplifier that
+          could theoretically be turned into a proper tapeout for fabrication.
+          This required additional considerations such as adding proper
+          electrostatic discharge (ESD) circuit protection, and connection pads
+          for inputs, outputs, and power supply. The full layout is shown in
+          figure 2 below.
+        </p>
+        <div class="figures-container centered">
+          <figure class="large-figure">
+            <img
+              src="../../assets/images/Chapter 3/Common-Source Amp/Common-Source Amp - Figure 2 - Full Layout.png"
+              alt="Full Layout Implementation"
+            />
+            <figcaption>Figure 2: Full Layout Implementation</figcaption>
+          </figure>
+        </div>
+        <p>
+          Figure 2 shows the full layout of the design, which includes 4
+          instances of the common-source amplifier. Each amplifier instance is
+          connected to its own input, output, and voltage supply pads. To save
+          some space, I kept the ground pads shared between all 4 amplifiers. I
+          made two grounding pads so that there was a ground connection on
+          either side of the chip. The ground pads are connected so that either
+          pad can be used as a ground reference. This final setup fits in a 10
+          pin package.
+        </p>
+
+        <h4>Amplifier Layout</h4>
+
+        <div class="figures-container centered">
+          <figure class="large-figure">
+            <img
+              src="../../assets/images/Chapter 3/Common-Source Amp/Common-Source Amp - Figure 3 - Amplifier Layout.png"
+              alt="Amplifier Layout"
+            />
+            <figcaption>
+              Figure 3: Individual Common-Source Amplifier Layout
+            </figcaption>
+          </figure>
+        </div>
+        <p>
+          Now let's look at the layout of the individual common-source amplifier
+          instances, shown above in figure 3. From the figure you can see that
+          the layout has three distinct sections. The current mirror and active
+          load PMOS transistors can be seen at the top of the layout. The NMOS
+          section is in the bottom right corner, and the passive resistive load
+          is in the bottom left corner. All around the layout there is a series
+          of substrate contacts that are connected to ground. This achieves a
+          couple of things: first, it connects the body of the NMOS transistor
+          to ground. But more importantly, it helps to isolate the circuit from
+          any unwanted noise and interference that is transmitted through the
+          substrate. Which means that each circuit should be able to operate
+          without interfering with each other.
+        </p>
+        <h5>PMOS Design</h5>
+        <div class="figures-container centered">
+          <figure class="large-figure">
+            <img
+              src="../../assets/images/Chapter 3/Common-Source Amp/Common-Source Amp - Figure 4 - PMOS Layout.png"
+              alt="PMOS Layout Section"
+            />
+            <figcaption>Figure 4: PMOS Layout Section</figcaption>
+          </figure>
+        </div>
+        <p>
+          Focusing in on the PMOS section of the layout, the PMOS transistors
+          are identical, and so only one needed to be designed. I then just
+          mirrored the instance about the vertical axis to create the second
+          PMOS transistor. One particular design choice I made here was to use
+          two slightly different gate widths for the PMOS transistor. As the
+          calculated gate width was 33.04µm, and my design choice of using 8
+          fingers resulted in a gate width 4.13µm per finger. Since the grid
+          size I am using is 0.02µm, I decided it was better to stick to the
+          grid. So I made 4 of the fingers 4.12µm wide, and the other 4 fingers
+          4.14µm wide. This maintained the overall gate area while reducing the
+          overall layout size. To reduce the chances of damaging the gate oxide
+          during fabrication, I separated each of the gates and connected them
+          using a strip of metal 1, which was then connected to the substrate
+          using a NAC diode. One more important design choice I made here was to
+          extend the source of the PMOS so that it surrounded the entirety of
+          the Nwell, with well contacts placed at regular intervals. This does
+          two things: first, it connects the body of the PMOS to the highest
+          potential in the circuit. The second thing is that the ring of well
+          contacts around the transistor helps to isolate the transistor from
+          unwanted substrate noise and interference.
+        </p>
+        <h5>NMOS Design</h5>
+        <div class="figures-container centered">
+          <figure class="large-figure">
+            <img
+              src="../../assets/images/Chapter 3/Common-Source Amp/Common-Source Amp - Figure 5 - NMOS Layout.png"
+              alt="NMOS Layout Section"
+            />
+            <figcaption>Figure 5: NMOS Layout Section</figcaption>
+          </figure>
+        </div>
+        <p>
+          Moving on to the NMOS section of the layout shown in figure 5 above,
+          it was the last active component to be designed. It also is the
+          component that I am least satisfied with. The final dimensions of the
+          NMOS transistor are way smaller than any of the other components,
+          which results in a lot of wasted space. While I don't believe it is
+          necessarily wrongly designed, I do think that there is a better way to
+          utilize the space. The problem is that most of the space is wasted in
+          the horizontal direction. I could utilize this by rotating the
+          transistor 90 degrees and simply making a single-finger transistor.
+          This would allow for a more compact layout. However, it risks having
+          matching issues between the NMOS and PMOS transistors, since their
+          poly layers would be oriented differently, which would result in
+          different etching results in fabrication. So I decided to stick with
+          the multi-finger approach and to use as many fingers as reasonably
+          possible to make sure the transistor makes as much use of the
+          available space. Another problem I have with this NMOS design is I'm
+          not sure if I should have extended the source region to surround the
+          transistor and to add well contacts. This would have added some
+          redundancy to the isolation of the transistor from substrate noise.
+          But as there was already a grounding region around the entire
+          amplifier layout, I decided it wasn't necessary.
+        </p>
+        <h5>Resistive Load Design</h5>
+        <div class="figures-container centered">
+          <figure class="large-figure">
+            <img
+              src="../../assets/images/Chapter 3/Common-Source Amp/Common-Source Amp - Figure 6 - Resistor Layout.png"
+              alt="Resistive Load Layout Section"
+            />
+            <figcaption>Figure 6: Resistive Load Layout Section</figcaption>
+          </figure>
+        </div>
+        <p>
+          The last part of the amplifier layout was the resistive load on the
+          biasing side of the circuit. For this, I used a strip of poly with an
+          N+ implantation region as the body of the resistor. I assumed a sheet
+          resistance of 250Ω/sq for this type of resistor. It was easiest to
+          break up the 3.98kΩ resistor into 4 resistors of 995Ω each. This
+          reduced the amount of vertical space that the resistors took up.
+          However, I did add some dummy resistors on the sides of the resistor
+          to help with matching the actual resistors. But this resulted in a
+          resistor setup that was wider than the PMOS component. So there is
+          some wasted space here as well. I chose to use a passive resistive
+          load instead of an active load to reduce the amount of noise in the
+          circuit, as well as to have an accurate and stable resistance value.
+          So, in order to achieve 4 resistors with the value of 995Ω, I designed
+          each resistor to have a body length of 5.32µm with a standardized
+          width of 1.5µm
+        </p>
+        <h4>Design Notes</h4>
+        <p>
+          One design rule that I haven't really mentioned yet is that I have
+          decided to follow minimum resistor sizes. Given my main source of
+          layout information is a 20-year-old book, I scaled the minimum
+          resistor width from 5µm to 1.5µm, and the minimum resistor length from
+          10µm to 5µm. I might revisit this decision later, as even with this
+          scaling, the resistors still increased the size of the layout
+          significantly.
+        </p>
+
+        <h4>Design Rule Verification</h4>
+        <p>
+          This layout was designed in accordance with the design rules I found
+          for the 0.18µm technology process. To see the complete rules, please
+          refer to the Project 1 page. The full DRC script I used can be found
+          there. Using the built-in DRC verification tool in KLayout, I ran the
+          DRC check on the layout. The results showed that there were no design
+          rule violations.
+        </p>
+
+        <figure class="figure-wrap centered">
+          <img
+            src="../../assets/images/Chapter 3/Common-Source Amp/Common-Source Amp - Figure 7 - DRC Results.png"
+            alt="DRC Results"
+          />
+          <figcaption>Figure 7: DRC Verification Results</figcaption>
+        </figure>
+
+        <p>01/13/2026</p>
+      </section>
+
+      <p style="text-align: center; margin-top: 30px">
+        <a href="../../project_1.html#completed-circuits"
+          >← Back to Completed Circuits</a
+        >
+        |
+        <a href="#top">↑ Back to Top</a>
+      </p>
+    </main>
+    <footer>
+      <p>&copy; 2026 Michael Hiltz</p>
+    </footer>
+    <script src="../../assets/js/scripts.js"></script>
+  </body>
+</html>
